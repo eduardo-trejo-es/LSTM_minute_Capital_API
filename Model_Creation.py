@@ -19,7 +19,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 #---------Layes are created
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-n_past =120
+n_past =40
 
 inputs=keras.Input(shape=(n_past,5))
 
