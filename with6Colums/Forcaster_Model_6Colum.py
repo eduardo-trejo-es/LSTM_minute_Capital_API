@@ -26,20 +26,22 @@ class Forcast_Data:
   def __init__(self,data_frame_Path):
     self.csvFileName=data_frame_Path
     
-  def ToForcast(self,n_units_to_predict,model_Path):
+  def ToForcast(self,n_units_to_predict,model_Path,dateFromForcast):
   ########     Getting the Data      ######
     N_units_to_predict=n_units_to_predict
     Model_Path=model_Path
     df=pd.read_csv(self.csvFileName, index_col="Unnamed: 0")
+    print(df.shape)
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
     #....... dates .....#
-    Dates_To_Use_To_Forcast=Data_dates[Data_dates.shape[0]-40:]
+    #Dates_To_Use_To_Forcast=Data_dates[Data_dates.shape[0]-40:]
+    Dates_To_Use_To_Forcast=Data_dates[df.index.get_loc(dateFromForcast)-60:df.index.get_loc(dateFromForcast)]
 
     #Getting the columns name
-    cols = list(df)[0:5]
+    cols = list(df)[0:6]
     #New dataframe with only training data - 5 columns
     df_forcasting = df[cols].astype(float)
 
@@ -53,9 +55,9 @@ class Forcast_Data:
 
     ####   getting the 40 most present data  ####
 
-    Batch_to_predict=DS_raw_scaled[DS_raw_scaled.shape[0]-40:]
+    Batch_to_predict=DS_raw_scaled[df.index.get_loc(dateFromForcast)-60:df.index.get_loc(dateFromForcast)]
     #....... databatch .....#
-    Batch_to_predict=np.reshape(Batch_to_predict,(1,40,5))
+    Batch_to_predict=np.reshape(Batch_to_predict,(1,60,6))
 
 
     ##############      Retriving model       ########
@@ -75,7 +77,7 @@ class Forcast_Data:
     ######    Generating forcast data   ######
     for i in range(N_Days_to_predict):
       prediction = model.predict(Batch_to_predict) #the input is a 30 units of time batch
-      prediction_Reshaped=np.reshape(prediction,(1,1,5))
+      prediction_Reshaped=np.reshape(prediction,(1,1,6))
       Batch_to_predict=np.append(Batch_to_predict,prediction_Reshaped, axis=1)
       Batch_to_predict=np.delete(Batch_to_predict,0,1)
       #print(Batch_to_predict.shape)
@@ -87,6 +89,7 @@ class Forcast_Data:
     predict_Low=[]
     predict_Close=[]
     predict_Volume=[]
+    predict_Time=[]
 
     #Splitting data with scaling back
     for i in range(N_Days_to_predict):
@@ -96,6 +99,7 @@ class Forcast_Data:
       predict_Low.append(y_pred_future[0][2])
       predict_Close.append(y_pred_future[0][3])
       predict_Volume.append(y_pred_future[0][4])
+      predict_Time.append(y_pred_future[0][4])
       
     ####################################### 
     #      Getting the candle chart       #
@@ -136,6 +140,7 @@ class Forcast_Data:
       predict_Volume.append(y_pred_future[0][4])
       
       
+      
     #--------  data shape it's (x days, 5 columns)
     # Convert timestamp to date
     df_forecast = pd.DataFrame({'Open':predict_Open,'High':predict_High, 'Low':predict_Low,'Close':predict_Close,'Volume':predict_Volume}, index=Forcasted_Dates)
@@ -144,3 +149,5 @@ class Forcast_Data:
 
     title_chart="Twtr"
     return mpf.plot(df_forecast, type='candle',title=title_chart, style='charles')
+    
+    

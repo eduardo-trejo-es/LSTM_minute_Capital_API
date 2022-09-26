@@ -136,11 +136,7 @@ class Model_Trainer:
 
 
     ##############      Retriving model       ########
-
-
     model = keras.models.load_model(modelPath)
-
-
 
     #######          Model Training      ################
 
