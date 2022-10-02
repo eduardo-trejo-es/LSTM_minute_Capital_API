@@ -87,4 +87,4 @@ print(model.summary())
 
 #keras.utils.plot_model(model, "my_first_model_with_shape_info.png", show_shapes=True)
 
-model.save("Model/Model_Twttr_6colum_0_0")
+model.save("Model/Model_Twttr_6colum_hour_0")
