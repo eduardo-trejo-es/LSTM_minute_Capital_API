@@ -6,9 +6,11 @@ forcaster = Forcast_Data("/Users/eduardo/Desktop/LSTM_Capital_API_220922/with6Co
 
 #training_result=trainer_model.to_tain("/Users/eduardo/Desktop/LSTM_Capital_API_220922/with6ColumsPerHour/Models/Model_Twttr_6colum_hour_0","/Users/eduardo/Desktop/LSTM_Capital_API_220922/with6ColumsPerHour/TimeColumHOUR.csv",70)
 
-#Result=forcaster.ToForcast(50,"/Users/eduardo/Desktop/LSTM_minute_Capital_API/with6Colums/Models/Model_Twttr_6colum_0_0","2022-08-18T09:00:00")
+#Result=forcaster.ToForcast(25,"/Users/eduardo/Desktop/LSTM_Capital_API_220922/with6ColumsPerHour/Models/Model_Twttr_6colum_hour_0","2022-09-29T05:00:00")
 
 
-Result=forcaster.to_forcast_close_true_and_forcasted(50,"/Users/eduardo/Desktop/LSTM_Capital_API_220922/with6ColumsPerHour/Models/Model_Twttr_6colum_hour_0","2022-09-30T07:00:00")
+Result=forcaster.to_forcast_close_true_and_forcasted(1,"/Users/eduardo/Desktop/LSTM_Capital_API_220922/with6ColumsPerHour/Models/Model_Twttr_6colum_hour_0","2022-02-24T07:00:00")
+
+
 
 print("done....")
