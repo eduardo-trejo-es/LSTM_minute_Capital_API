@@ -23,10 +23,11 @@ from tensorflow.python.keras.layers.core import Activation
 
 class Model_Trainer:
 
-  def __init__(self):
-    pass
+  def __init__(self, model_to_use,ephoc_num):
+    self.Model_to_use= model_to_use
+    self.Ephoc_num=ephoc_num
   
-  def to_tain(self,modelPath,DatasetPath,ThepercentageTrainingData):
+  def to_tain(self,DatasetPath,ThepercentageTrainingData):
 
     ########     Getting the Data      ######
     csvFileName=DatasetPath
@@ -136,7 +137,7 @@ class Model_Trainer:
 
 
     ##############      Retriving model       ########
-    model = keras.models.load_model(modelPath)
+    model = keras.models.load_model(self.Model_to_use)
 
     #######          Model Training      ################
 
@@ -163,7 +164,7 @@ class Model_Trainer:
     
     early_stop= EarlyStopping(monitor='val_loss',mode='min',verbose=1,patience=25)
     
-    model.fit(x=trainX,y=y_data, epochs=600, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
+    model.fit(x=trainX,y=y_data, epochs=self.Ephoc_num, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
     #history = model.fit(trainX,y=y_data, epochs=125, batch_size=15)
 
 
@@ -171,7 +172,7 @@ class Model_Trainer:
 
     losses.plot()
 
-    model.save(modelPath)
+    model.save(self.Model_to_use)
     
     
     Training_result="done... ;)"
