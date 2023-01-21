@@ -40,7 +40,7 @@ class DatasetGenerator:
             df.to_csv(path_or_buf=csvFileName_New,index=True)
             
 
-    def AddColumnWeekDay(self,csvFileName, csvFileName_New):
+    def AddColumnWeekDay(self,csvFileName, csvFileName_New,DayName_Too):
         df=pd.read_csv(csvFileName, index_col="Date")
         
         dateIndex=[]
@@ -52,10 +52,15 @@ class DatasetGenerator:
             weekday_Name.append(str(d_name.day_name()))
             weekday_Number.append(d_name.dayofweek)
             
-        df["DayName"]=weekday_Name
-        df["DayNumber"]=weekday_Number
-
+        if DayName_Too:
+            df["DayNumber"]=weekday_Number
+        else:
+            df["DayName"]=weekday_Name
+            df["DayNumber"]=weekday_Number
+            
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
+            
+        
         
     def Add_ColumsFourier_Transform(self,periodic_Components_num,column_to_use, Origin_File_Path,Destiny_File_Path):
         csvFileName=Origin_File_Path
