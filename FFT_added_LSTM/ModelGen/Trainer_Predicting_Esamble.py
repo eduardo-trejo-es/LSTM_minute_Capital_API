@@ -37,7 +37,7 @@ class Model_Trainer:
     Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
 
-
+    Columns_N=csvFileName
     #Getting the columns name
     cols = list(df)[0:5]
     print(cols)
