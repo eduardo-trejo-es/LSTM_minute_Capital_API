@@ -61,6 +61,10 @@ class Model_Trainer:
     DS_raw_Low_scaled=DS_raw_scaled[:,[2]]
     DS_raw_Close_scaled=DS_raw_scaled[:,[3]]
     DS_raw_Volume_scaled=DS_raw_scaled[:,[4]]
+    DS_raw_High_scaled=DS_raw_scaled[:,[5]]
+    DS_raw_Low_scaled=DS_raw_scaled[:,[6]]
+    DS_raw_Close_scaled=DS_raw_scaled[:,[7]]
+    DS_raw_Volume_scaled=DS_raw_scaled[:,[8]]
 
 
     #Empty lists to be populated using formatted training data
