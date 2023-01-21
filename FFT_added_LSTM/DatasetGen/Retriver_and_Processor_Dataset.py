@@ -12,7 +12,9 @@ class DatasetGenerator:
         endDate= to
 
         df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',utc=True,threads = True)
-
+        
+        df.pop("Adj Close")
+        
         self.SavingDataset(df,csvFileName, csvFileName_New, True)
         
             
@@ -53,9 +55,9 @@ class DatasetGenerator:
             weekday_Number.append(d_name.dayofweek)
             
         if DayName_Too:
+            df["DayName"]=weekday_Name
             df["DayNumber"]=weekday_Number
         else:
-            df["DayName"]=weekday_Name
             df["DayNumber"]=weekday_Number
             
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
@@ -99,5 +101,6 @@ class DatasetGenerator:
         
         df["FFT_Mag_{}_{}".format(Colum_Used,periodic_Components_num)]=Magnitud
         df["FFT_Angl_{}_{}".format(Colum_Used,periodic_Components_num)]=Angle     
+        
         self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
         

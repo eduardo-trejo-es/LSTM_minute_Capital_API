@@ -20,7 +20,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
 n_past =120
-Columns_N=31
+Columns_N=36
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
@@ -66,6 +66,12 @@ dense_27=keras.layers.Dense(1)(Dropout_layer3)
 dense_28=keras.layers.Dense(1)(Dropout_layer3)
 dense_29=keras.layers.Dense(1)(Dropout_layer3)
 dense_30=keras.layers.Dense(1)(Dropout_layer3)
+dense_31=keras.layers.Dense(1)(Dropout_layer3)
+dense_32=keras.layers.Dense(1)(Dropout_layer3)
+dense_33=keras.layers.Dense(1)(Dropout_layer3)
+dense_34=keras.layers.Dense(1)(Dropout_layer3)
+dense_35=keras.layers.Dense(1)(Dropout_layer3)
+
 
 #-------Layers outputs are linked
 
@@ -100,6 +106,12 @@ outputs_27=dense_27
 outputs_28=dense_28
 outputs_29=dense_29
 outputs_30=dense_30
+outputs_31=dense_31
+outputs_32=dense_32
+outputs_33=dense_33
+outputs_34=dense_34
+outputs_35=dense_35
+
 
 
 #-----The model it's created
@@ -109,7 +121,8 @@ outputArray=[outputs_0,outputs_1,outputs_2,outputs_3,outputs_4,
              outputs_15,outputs_16,outputs_17,outputs_18,outputs_19,
              outputs_20,outputs_21,outputs_22,outputs_23,outputs_24,
              outputs_25,outputs_26,outputs_27,outputs_28,outputs_29,
-             outputs_30]
+             outputs_30,outputs_31,outputs_32,outputs_33,outputs_34,
+             outputs_35]
 
 model=keras.Model(inputs=inputs, outputs=outputArray, name='Prices_Forcasting_LSTM_FFT')
 #model=keras.Model(inputs=[inputs,None], outputs=[outputs,outputs2,outputs3,outputs4,outputs5,outputs6], name='Prices_Prediction')
@@ -150,6 +163,11 @@ loss_27 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_err
 loss_28 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss_29 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss_30 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+loss_31 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+loss_32 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+loss_33 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+loss_34 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+loss_35 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 #optim=keras.optimizers.Adam(1e-3)
 optim=keras.optimizers.Adam(1e-3)
 metrics=["accuracy"]
@@ -185,7 +203,12 @@ losses={
     "dense_27": loss_27,
     "dense_28": loss_28,
     "dense_29": loss_29,
-    "dense_30": loss_30
+    "dense_30": loss_30,
+    "dense_31": loss_31,
+    "dense_32": loss_32,
+    "dense_33": loss_33,
+    "dense_34": loss_34,
+    "dense_35": loss_35
 }
 
 model.compile(loss=losses, optimizer=optim, metrics=metrics)
