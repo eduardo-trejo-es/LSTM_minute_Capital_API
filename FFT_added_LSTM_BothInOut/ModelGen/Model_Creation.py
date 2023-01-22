@@ -35,7 +35,7 @@ Dropout_layer3=keras.layers.Dropout(0.6)(LSTM_Layer2)# modify
 
 
 #---------------------------Outputs
-dense_0=keras.layers.Dense(1)(Dropout_layer3)
+dense=keras.layers.Dense(1)(Dropout_layer3)
 dense_1=keras.layers.Dense(1)(Dropout_layer3)
 dense_2=keras.layers.Dense(1)(Dropout_layer3)
 dense_3=keras.layers.Dense(1)(Dropout_layer3)
@@ -75,7 +75,7 @@ dense_35=keras.layers.Dense(1)(Dropout_layer3)
 
 #-------Layers outputs are linked
 
-outputs_0=dense_0
+outputs=dense
 outputs_1=dense_1
 outputs_2=dense_2
 outputs_3=dense_3
@@ -115,7 +115,7 @@ outputs_35=dense_35
 
 
 #-----The model it's created
-outputArray=[outputs_0,outputs_1,outputs_2,outputs_3,outputs_4,
+outputArray=[outputs,outputs_1,outputs_2,outputs_3,outputs_4,
              outputs_5,outputs_6,outputs_7,outputs_8,outputs_9,
              outputs_10,outputs_11,outputs_12,outputs_13,outputs_14,
              outputs_15,outputs_16,outputs_17,outputs_18,outputs_19,
@@ -132,7 +132,7 @@ model=keras.Model(inputs=inputs, outputs=outputArray, name='Prices_Forcasting_LS
 
 #------------------- Loss and optimizer ----------------------------------------
 #got to ensure MeanAbsoluteError it's the good one for our data
-loss_0 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
+loss = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss_1 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss_2 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss_3 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
@@ -173,7 +173,7 @@ optim=keras.optimizers.Adam(1e-3)
 metrics=["accuracy"]
 
 losses={
-    "dense_0": loss_0,
+    "dense": loss,
     "dense_1": loss_1,
     "dense_2": loss_2,
     "dense_3": loss_3,

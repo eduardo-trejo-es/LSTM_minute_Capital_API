@@ -26,20 +26,21 @@ class Model_Trainer:
   def __init__(self):
     pass
   
-  def to_tain(self,modelPath,DatasetPath,ThepercentageTrainingData):
+  def to_train(self,modelPath,DatasetPath,ThepercentageTrainingData):
 
     ########     Getting the Data      ######
     csvFileName=DatasetPath
 
-    df=pd.read_csv(csvFileName, index_col="Unnamed: 0")
+    df=pd.read_csv(csvFileName)
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
-
+    
+    df.pop('Date')
     Columns_N=df.shape[1]
     #Getting the columns name
-    cols = list(df)[0:Columns_N-1]
+    cols = list(df)[0:Columns_N]
     print(cols)
 
 
@@ -56,17 +57,44 @@ class Model_Trainer:
     DS_raw_scaled = scaler.transform(df_for_training)
 
     #Scaling for OutPuts "Y" colums
-    DS_raw_Open_scaled=DS_raw_scaled[:,[0]] #selecting colums from a numpy array
+    DS_raw_Open_scaled=DS_raw_scaled[:,[0]]
     DS_raw_High_scaled=DS_raw_scaled[:,[1]]
     DS_raw_Low_scaled=DS_raw_scaled[:,[2]]
     DS_raw_Close_scaled=DS_raw_scaled[:,[3]]
     DS_raw_Volume_scaled=DS_raw_scaled[:,[4]]
-    DS_raw_High_scaled=DS_raw_scaled[:,[5]]
-    DS_raw_Low_scaled=DS_raw_scaled[:,[6]]
-    DS_raw_Close_scaled=DS_raw_scaled[:,[7]]
-    DS_raw_Volume_scaled=DS_raw_scaled[:,[8]]
+    DS_raw_DayNumber_scaled=DS_raw_scaled[:,[5]]
+    DS_raw_FFT_Mag_Open_10_scaled=DS_raw_scaled[:,[6]]
+    DS_raw_FFT_Angl_Open_10_scaled=DS_raw_scaled[:,[7]]
+    DS_raw_FFT_Mag_Open_50_scaled=DS_raw_scaled[:,[8]]
+    DS_raw_FFT_Angl_Open_50_scaled=DS_raw_scaled[:,[9]]
+    DS_raw_FFT_Mag_Open_100_scaled=DS_raw_scaled[:,[10]]
+    DS_raw_FFT_Angl_Open_100_scaled=DS_raw_scaled[:,[11]]
+    DS_raw_FFT_Mag_High_10_scaled=DS_raw_scaled[:,[12]]
+    DS_raw_FFT_Angl_High_10_scaled=DS_raw_scaled[:,[13]]
+    DS_raw_FFT_Mag_High_50_scaled=DS_raw_scaled[:,[14]]
+    DS_raw_FFT_Angl_High_50_scaled=DS_raw_scaled[:,[15]]
+    DS_raw_FFT_Mag_High_100_scaled=DS_raw_scaled[:,[16]]
+    DS_raw_FFT_Angl_High_100_scaled=DS_raw_scaled[:,[17]]
+    DS_raw_FFT_Mag_Low_10_scaled=DS_raw_scaled[:,[18]]
+    DS_raw_FFT_Angl_Low_10_scaled=DS_raw_scaled[:,[19]]
+    DS_raw_FFT_Mag_Low_50_scaled=DS_raw_scaled[:,[20]]
+    DS_raw_FFT_Angl_Low_50_scaled=DS_raw_scaled[:,[21]]
+    DS_raw_FFT_Mag_Low_100_scaled=DS_raw_scaled[:,[22]]
+    DS_raw_FFT_Angl_Low_100_scaled=DS_raw_scaled[:,[23]]
+    DS_raw_FFT_Mag_Close_10_scaled=DS_raw_scaled[:,[24]]
+    DS_raw_FFT_Angl_Close_10_scaled=DS_raw_scaled[:,[25]]
+    DS_raw_FFT_Mag_Close_50_scaled=DS_raw_scaled[:,[26]]
+    DS_raw_FFT_Angl_Close_50_scaled=DS_raw_scaled[:,[27]]
+    DS_raw_FFT_Mag_Close_100_scaled=DS_raw_scaled[:,[28]]
+    DS_raw_FFT_Angl_Close_100_scaled=DS_raw_scaled[:,[29]]
+    DS_raw_FFT_Mag_Volume_10_scaled=DS_raw_scaled[:,[30]]
+    DS_raw_FFT_Angl_Volume_10_scaled=DS_raw_scaled[:,[31]]
+    DS_raw_FFT_Mag_Volume_50_scaled=DS_raw_scaled[:,[32]]
+    DS_raw_FFT_Angl_Volume_50_scaled=DS_raw_scaled[:,[33]]
+    DS_raw_FFT_Mag_Volume_100_scaled=DS_raw_scaled[:,[34]]
+    DS_raw_FFT_Angl_Volume_100_scaled=DS_raw_scaled[:,[35]]
 
-
+    
     #Empty lists to be populated using formatted training data
     DS_finished_X = []
     DS_finished_Open_Y = []
@@ -74,9 +102,40 @@ class Model_Trainer:
     DS_finished_Low_Y = []
     DS_finished_Close_Y = []
     DS_finished_Volume_Y = []
+    DS_finished_DayNumber_Y = []
+    DS_finished_FFT_Mag_Open_10_Y = []
+    DS_finished_FFT_Angl_Open_10_Y = []
+    DS_finished_FFT_Mag_Open_50_Y = []
+    DS_finished_FFT_Angl_Open_50_Y = []
+    DS_finished_FFT_Mag_Open_100_Y = []
+    DS_finished_FFT_Angl_Open_100_Y = []
+    DS_finished_FFT_Mag_High_10_Y = []
+    DS_finished_FFT_Angl_High_10_Y = []
+    DS_finished_FFT_Mag_High_50_Y = []
+    DS_finished_FFT_Angl_High_50_Y = []
+    DS_finished_FFT_Mag_High_100_Y = []
+    DS_finished_FFT_Angl_High_100_Y = []
+    DS_finished_FFT_Mag_Low_10_Y = []
+    DS_finished_FFT_Angl_Low_10_Y = []
+    DS_finished_FFT_Mag_Low_50_Y = []
+    DS_finished_FFT_Angl_Low_50_Y = []
+    DS_finished_FFT_Mag_Low_100_Y = []
+    DS_finished_FFT_Angl_Low_100_Y = []
+    DS_finished_FFT_Mag_Close_10_Y = []
+    DS_finished_FFT_Angl_Close_10_Y = []
+    DS_finished_FFT_Mag_Close_50_Y = []
+    DS_finished_FFT_Angl_Close_50_Y = []
+    DS_finished_FFT_Mag_Close_100_Y = []
+    DS_finished_FFT_Angl_Close_100_Y = []
+    DS_finished_FFT_Mag_Volume_10_Y = []
+    DS_finished_FFT_Angl_Volume_10_Y = []
+    DS_finished_FFT_Mag_Volume_50_Y = []
+    DS_finished_FFT_Angl_Volume_50_Y = []
+    DS_finished_FFT_Mag_Volume_100_Y = []
+    DS_finished_FFT_Angl_Volume_100_Y = []
 
     n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-    n_past =40
+    n_past =120
 
 
     # Creatig the data batches, each one with 30d days
@@ -88,12 +147,41 @@ class Model_Trainer:
       DS_finished_Low_Y.append(DS_raw_Low_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
       DS_finished_Close_Y.append(DS_raw_Close_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
       DS_finished_Volume_Y.append(DS_raw_Volume_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
-      
-    DS_finished_X, DS_finished_Open_Y, DS_finished_High_Y, DS_finished_Low_Y =  np.array(DS_finished_X), np.array(DS_finished_Open_Y), np.array(DS_finished_High_Y), np.array(DS_finished_Low_Y)
-    DS_finished_Close_Y, DS_finished_Volume_Y = np.array(DS_finished_Close_Y), np.array(DS_finished_Volume_Y)
+      DS_finished_DayNumber_Y.append(DS_raw_DayNumber_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Open_10_Y.append(DS_raw_FFT_Mag_Open_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Open_10_Y.append(DS_raw_FFT_Angl_Open_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Open_50_Y.append(DS_raw_FFT_Mag_Open_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Open_50_Y.append(DS_raw_FFT_Angl_Open_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Open_100_Y.append(DS_raw_FFT_Mag_Open_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Open_100_Y.append(DS_raw_FFT_Angl_Open_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_High_10_Y.append(DS_raw_FFT_Mag_High_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_High_10_Y.append(DS_raw_FFT_Angl_High_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_High_50_Y.append(DS_raw_FFT_Mag_High_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_High_50_Y.append(DS_raw_FFT_Angl_High_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_High_100_Y.append(DS_raw_FFT_Mag_High_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_High_100_Y.append(DS_raw_FFT_Angl_High_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Low_10_Y.append(DS_raw_FFT_Mag_Low_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Low_10_Y.append(DS_raw_FFT_Angl_Low_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Low_50_Y.append(DS_raw_FFT_Mag_Low_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Low_50_Y.append(DS_raw_FFT_Angl_Low_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Low_100_Y.append(DS_raw_FFT_Mag_Low_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Low_100_Y.append(DS_raw_FFT_Angl_Low_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Close_10_Y.append(DS_raw_FFT_Mag_Close_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Close_10_Y.append(DS_raw_FFT_Angl_Close_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Close_50_Y.append(DS_raw_FFT_Mag_Close_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Close_50_Y.append(DS_raw_FFT_Angl_Close_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Close_100_Y.append(DS_raw_FFT_Mag_Close_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Close_100_Y.append(DS_raw_FFT_Angl_Close_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Volume_10_Y.append(DS_raw_FFT_Mag_Volume_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Volume_10_Y.append(DS_raw_FFT_Angl_Volume_10_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Volume_50_Y.append(DS_raw_FFT_Mag_Volume_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Volume_50_Y.append(DS_raw_FFT_Angl_Volume_50_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Mag_Volume_100_Y.append(DS_raw_FFT_Mag_Volume_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
+      DS_finished_FFT_Angl_Volume_100_Y.append(DS_raw_FFT_Angl_Volume_100_scaled[i:i+1, 0:DS_raw_scaled.shape[1]])
 
+    DS_finished_X,DS_finished_Open_Y,DS_finished_High_Y,DS_finished_Low_Y,DS_finished_Close_Y,DS_finished_Volume_Y,DS_finished_DayNumber_Y,DS_finished_FFT_Mag_Open_10_Y,DS_finished_FFT_Angl_Open_10_Y,DS_finished_FFT_Mag_Open_50_Y,DS_finished_FFT_Angl_Open_50_Y,DS_finished_FFT_Mag_Open_100_Y,DS_finished_FFT_Angl_Open_100_Y,DS_finished_FFT_Mag_High_10_Y,DS_finished_FFT_Angl_High_10_Y,DS_finished_FFT_Mag_High_50_Y,DS_finished_FFT_Angl_High_50_Y,DS_finished_FFT_Mag_High_100_Y,DS_finished_FFT_Angl_High_100_Y,DS_finished_FFT_Mag_Low_10_Y,DS_finished_FFT_Angl_Low_10_Y,DS_finished_FFT_Mag_Low_50_Y,DS_finished_FFT_Angl_Low_50_Y,DS_finished_FFT_Mag_Low_100_Y,DS_finished_FFT_Angl_Low_100_Y,DS_finished_FFT_Mag_Close_10_Y,DS_finished_FFT_Angl_Close_10_Y,DS_finished_FFT_Mag_Close_50_Y,DS_finished_FFT_Angl_Close_50_Y,DS_finished_FFT_Mag_Close_100_Y,DS_finished_FFT_Angl_Close_100_Y,DS_finished_FFT_Mag_Volume_10_Y,DS_finished_FFT_Angl_Volume_10_Y,DS_finished_FFT_Mag_Volume_50_Y,DS_finished_FFT_Angl_Volume_50_Y,DS_finished_FFT_Mag_Volume_100_Y,DS_finished_FFT_Angl_Volume_100_Y=np.array(DS_finished_X), np.array(DS_finished_Open_Y),np.array(DS_finished_High_Y),np.array(DS_finished_Low_Y),np.array(DS_finished_Close_Y),np.array(DS_finished_Volume_Y),np.array(DS_finished_DayNumber_Y),np.array(DS_finished_FFT_Mag_Open_10_Y),np.array(DS_finished_FFT_Angl_Open_10_Y),np.array(DS_finished_FFT_Mag_Open_50_Y),np.array(DS_finished_FFT_Angl_Open_50_Y),np.array(DS_finished_FFT_Mag_Open_100_Y),np.array(DS_finished_FFT_Angl_Open_100_Y),np.array(DS_finished_FFT_Mag_High_10_Y),np.array(DS_finished_FFT_Angl_High_10_Y),np.array(DS_finished_FFT_Mag_High_50_Y),np.array(DS_finished_FFT_Angl_High_50_Y),np.array(DS_finished_FFT_Mag_High_100_Y),np.array(DS_finished_FFT_Angl_High_100_Y),np.array(DS_finished_FFT_Mag_Low_10_Y),np.array(DS_finished_FFT_Angl_Low_10_Y),np.array(DS_finished_FFT_Mag_Low_50_Y),np.array(DS_finished_FFT_Angl_Low_50_Y),np.array(DS_finished_FFT_Mag_Low_100_Y),np.array(DS_finished_FFT_Angl_Low_100_Y),np.array(DS_finished_FFT_Mag_Close_10_Y),np.array(DS_finished_FFT_Angl_Close_10_Y),np.array(DS_finished_FFT_Mag_Close_50_Y),np.array(DS_finished_FFT_Angl_Close_50_Y),np.array(DS_finished_FFT_Mag_Close_100_Y),np.array(DS_finished_FFT_Angl_Close_100_Y),np.array(DS_finished_FFT_Mag_Volume_10_Y),np.array(DS_finished_FFT_Angl_Volume_10_Y),np.array(DS_finished_FFT_Mag_Volume_50_Y),np.array(DS_finished_FFT_Angl_Volume_50_Y),np.array(DS_finished_FFT_Mag_Volume_100_Y),np.array(DS_finished_FFT_Angl_Volume_100_Y)
+    
     DS_dates_finished_X = []
-
 
     ### Creating the data dates batches
     for a in range(n_past, len(Data_dates) - n_future +1):
@@ -109,7 +197,6 @@ class Model_Trainer:
     #This Function split dataset with shape (z,x, y) and is splited in z
     def Split3DimData(DataSet,percentageTrainig):
       percentageTrainDataset = 0
-
       percentageTrainDataset=int((DataSet.shape[0]*percentageTrainig)/100)
       DataSetSplittedTraining=DataSet[0:percentageTrainDataset]
       DataSetSplittedTesting= DataSet[percentageTrainDataset:]
@@ -119,11 +206,42 @@ class Model_Trainer:
     percentageTrainingData= ThepercentageTrainingData
     #####   training data, testing data  ####
     trainX, testingX = Split3DimData(DS_finished_X,percentageTrainingData)
-    trainY_Open, testingY_Open = Split3DimData(DS_finished_Open_Y,percentageTrainingData)
-    trainY_High, testingY_High = Split3DimData(DS_finished_High_Y,percentageTrainingData)
-    trainY_Low, testingY_Low = Split3DimData(DS_finished_Low_Y,percentageTrainingData)
-    trainY_Close, testingY_Close = Split3DimData(DS_finished_Close_Y,percentageTrainingData)
-    trainY_Volume,testingY_Volume = Split3DimData(DS_finished_Volume_Y,percentageTrainingData)
+    trainY_Open,testingY_Open=Split3DimData(DS_finished_Open_Y,percentageTrainingData)
+    trainY_High,testingY_High=Split3DimData(DS_finished_High_Y,percentageTrainingData)
+    trainY_Low,testingY_Low=Split3DimData(DS_finished_Low_Y,percentageTrainingData)
+    trainY_Close,testingY_Close=Split3DimData(DS_finished_Close_Y,percentageTrainingData)
+    trainY_Volume,testingY_Volume=Split3DimData(DS_finished_Volume_Y,percentageTrainingData)
+    trainY_DayNumber,testingY_DayNumber=Split3DimData(DS_finished_DayNumber_Y,percentageTrainingData)
+    trainY_FFT_Mag_Open_10,testingY_FFT_Mag_Open_10=Split3DimData(DS_finished_FFT_Mag_Open_10_Y,percentageTrainingData)
+    trainY_FFT_Angl_Open_10,testingY_FFT_Angl_Open_10=Split3DimData(DS_finished_FFT_Angl_Open_10_Y,percentageTrainingData)
+    trainY_FFT_Mag_Open_50,testingY_FFT_Mag_Open_50=Split3DimData(DS_finished_FFT_Mag_Open_50_Y,percentageTrainingData)
+    trainY_FFT_Angl_Open_50,testingY_FFT_Angl_Open_50=Split3DimData(DS_finished_FFT_Angl_Open_50_Y,percentageTrainingData)
+    trainY_FFT_Mag_Open_100,testingY_FFT_Mag_Open_100=Split3DimData(DS_finished_FFT_Mag_Open_100_Y,percentageTrainingData)
+    trainY_FFT_Angl_Open_100,testingY_FFT_Angl_Open_100=Split3DimData(DS_finished_FFT_Angl_Open_100_Y,percentageTrainingData)
+    trainY_FFT_Mag_High_10,testingY_FFT_Mag_High_10=Split3DimData(DS_finished_FFT_Mag_High_10_Y,percentageTrainingData)
+    trainY_FFT_Angl_High_10,testingY_FFT_Angl_High_10=Split3DimData(DS_finished_FFT_Angl_High_10_Y,percentageTrainingData)
+    trainY_FFT_Mag_High_50,testingY_FFT_Mag_High_50=Split3DimData(DS_finished_FFT_Mag_High_50_Y,percentageTrainingData)
+    trainY_FFT_Angl_High_50,testingY_FFT_Angl_High_50=Split3DimData(DS_finished_FFT_Angl_High_50_Y,percentageTrainingData)
+    trainY_FFT_Mag_High_100,testingY_FFT_Mag_High_100=Split3DimData(DS_finished_FFT_Mag_High_100_Y,percentageTrainingData)
+    trainY_FFT_Angl_High_100,testingY_FFT_Angl_High_100=Split3DimData(DS_finished_FFT_Angl_High_100_Y,percentageTrainingData)
+    trainY_FFT_Mag_Low_10,testingY_FFT_Mag_Low_10=Split3DimData(DS_finished_FFT_Mag_Low_10_Y,percentageTrainingData)
+    trainY_FFT_Angl_Low_10,testingY_FFT_Angl_Low_10=Split3DimData(DS_finished_FFT_Angl_Low_10_Y,percentageTrainingData)
+    trainY_FFT_Mag_Low_50,testingY_FFT_Mag_Low_50=Split3DimData(DS_finished_FFT_Mag_Low_50_Y,percentageTrainingData)
+    trainY_FFT_Angl_Low_50,testingY_FFT_Angl_Low_50=Split3DimData(DS_finished_FFT_Angl_Low_50_Y,percentageTrainingData)
+    trainY_FFT_Mag_Low_100,testingY_FFT_Mag_Low_100=Split3DimData(DS_finished_FFT_Mag_Low_100_Y,percentageTrainingData)
+    trainY_FFT_Angl_Low_100,testingY_FFT_Angl_Low_100=Split3DimData(DS_finished_FFT_Angl_Low_100_Y,percentageTrainingData)
+    trainY_FFT_Mag_Close_10,testingY_FFT_Mag_Close_10=Split3DimData(DS_finished_FFT_Mag_Close_10_Y,percentageTrainingData)
+    trainY_FFT_Angl_Close_10,testingY_FFT_Angl_Close_10=Split3DimData(DS_finished_FFT_Angl_Close_10_Y,percentageTrainingData)
+    trainY_FFT_Mag_Close_50,testingY_FFT_Mag_Close_50=Split3DimData(DS_finished_FFT_Mag_Close_50_Y,percentageTrainingData)
+    trainY_FFT_Angl_Close_50,testingY_FFT_Angl_Close_50=Split3DimData(DS_finished_FFT_Angl_Close_50_Y,percentageTrainingData)
+    trainY_FFT_Mag_Close_100,testingY_FFT_Mag_Close_100=Split3DimData(DS_finished_FFT_Mag_Close_100_Y,percentageTrainingData)
+    trainY_FFT_Angl_Close_100,testingY_FFT_Angl_Close_100=Split3DimData(DS_finished_FFT_Angl_Close_100_Y,percentageTrainingData)
+    trainY_FFT_Mag_Volume_10,testingY_FFT_Mag_Volume_10=Split3DimData(DS_finished_FFT_Mag_Volume_10_Y,percentageTrainingData)
+    trainY_FFT_Angl_Volume_10,testingY_FFT_Angl_Volume_10=Split3DimData(DS_finished_FFT_Angl_Volume_10_Y,percentageTrainingData)
+    trainY_FFT_Mag_Volume_50,testingY_FFT_Mag_Volume_50=Split3DimData(DS_finished_FFT_Mag_Volume_50_Y,percentageTrainingData)
+    trainY_FFT_Angl_Volume_50,testingY_FFT_Angl_Volume_50=Split3DimData(DS_finished_FFT_Angl_Volume_50_Y,percentageTrainingData)
+    trainY_FFT_Mag_Volume_100,testingY_FFT_Mag_Volume_100=Split3DimData(DS_finished_FFT_Mag_Volume_100_Y,percentageTrainingData)
+    trainY_FFT_Angl_Volume_100,testingY_FFT_Angl_Volume_100=Split3DimData(DS_finished_FFT_Angl_Volume_100_Y,percentageTrainingData)
 
     ##Validated data set, im getting the spected result
 
@@ -153,6 +271,37 @@ class Model_Trainer:
       "dense_2": trainY_Low,
       "dense_3": trainY_Close,
       "dense_4": trainY_Volume,
+      "dense_5": trainY_DayNumber,
+      "dense_6": trainY_FFT_Mag_Open_10,
+      "dense_7": trainY_FFT_Angl_Open_10,
+      "dense_8": trainY_FFT_Mag_Open_50,
+      "dense_9": trainY_FFT_Angl_Open_50,
+      "dense_10": trainY_FFT_Mag_Open_100,
+      "dense_11": trainY_FFT_Angl_Open_100,
+      "dense_12": trainY_FFT_Mag_High_10,
+      "dense_13": trainY_FFT_Angl_High_10,
+      "dense_14": trainY_FFT_Mag_High_50,
+      "dense_15": trainY_FFT_Angl_High_50,
+      "dense_16": trainY_FFT_Mag_High_100,
+      "dense_17": trainY_FFT_Angl_High_100,
+      "dense_18": trainY_FFT_Mag_Low_10,
+      "dense_19": trainY_FFT_Angl_Low_10,
+      "dense_20": trainY_FFT_Mag_Low_50,
+      "dense_21": trainY_FFT_Angl_Low_50,
+      "dense_22": trainY_FFT_Mag_Low_100,
+      "dense_23": trainY_FFT_Angl_Low_100,
+      "dense_24": trainY_FFT_Mag_Close_10,
+      "dense_25": trainY_FFT_Angl_Close_10,
+      "dense_26": trainY_FFT_Mag_Close_50,
+      "dense_27": trainY_FFT_Angl_Close_50,
+      "dense_28": trainY_FFT_Mag_Close_100,
+      "dense_29": trainY_FFT_Angl_Close_100,
+      "dense_30": trainY_FFT_Mag_Volume_10,
+      "dense_31": trainY_FFT_Angl_Volume_10,
+      "dense_32": trainY_FFT_Mag_Volume_50,
+      "dense_33": trainY_FFT_Angl_Volume_50,
+      "dense_34": trainY_FFT_Mag_Volume_100,
+      "dense_35": trainY_FFT_Angl_Volume_100
     }
     testing_y_data={
       "dense": testingY_Open,
@@ -160,7 +309,37 @@ class Model_Trainer:
       "dense_2": testingY_Low,
       "dense_3": testingY_Close,
       "dense_4": testingY_Volume,
-
+      "dense_5": testingY_DayNumber,
+      "dense_6": testingY_FFT_Mag_Open_10,
+      "dense_7": testingY_FFT_Angl_Open_10,
+      "dense_8": testingY_FFT_Mag_Open_50,
+      "dense_9": testingY_FFT_Angl_Open_50,
+      "dense_10": testingY_FFT_Mag_Open_100,
+      "dense_11": testingY_FFT_Angl_Open_100,
+      "dense_12": testingY_FFT_Mag_High_10,
+      "dense_13": testingY_FFT_Angl_High_10,
+      "dense_14": testingY_FFT_Mag_High_50,
+      "dense_15": testingY_FFT_Angl_High_50,
+      "dense_16": testingY_FFT_Mag_High_100,
+      "dense_17": testingY_FFT_Angl_High_100,
+      "dense_18": testingY_FFT_Mag_Low_10,
+      "dense_19": testingY_FFT_Angl_Low_10,
+      "dense_20": testingY_FFT_Mag_Low_50,
+      "dense_21": testingY_FFT_Angl_Low_50,
+      "dense_22": testingY_FFT_Mag_Low_100,
+      "dense_23": testingY_FFT_Angl_Low_100,
+      "dense_24": testingY_FFT_Mag_Close_10,
+      "dense_25": testingY_FFT_Angl_Close_10,
+      "dense_26": testingY_FFT_Mag_Close_50,
+      "dense_27": testingY_FFT_Angl_Close_50,
+      "dense_28": testingY_FFT_Mag_Close_100,
+      "dense_29": testingY_FFT_Angl_Close_100,
+      "dense_30": testingY_FFT_Mag_Volume_10,
+      "dense_31": testingY_FFT_Angl_Volume_10,
+      "dense_32": testingY_FFT_Mag_Volume_50,
+      "dense_33": testingY_FFT_Angl_Volume_50,
+      "dense_34": testingY_FFT_Mag_Volume_100,
+      "dense_35": testingY_FFT_Angl_Volume_100
     }
 
     #------------------------- Training model --------------------------------
