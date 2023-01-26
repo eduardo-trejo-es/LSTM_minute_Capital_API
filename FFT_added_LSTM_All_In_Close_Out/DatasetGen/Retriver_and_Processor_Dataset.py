@@ -1,5 +1,6 @@
 import pandas as pd
 import yfinance as yf
+from datetime import date
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +12,7 @@ class DatasetGenerator:
         startDate=From
         endDate= to
 
-        df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',utc=True,threads = True)
+        df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',threads = True)
         
         df.pop("Adj Close")
         
@@ -103,4 +104,20 @@ class DatasetGenerator:
         df["FFT_Angl_{}_{}".format(Colum_Used,periodic_Components_num)]=Angle     
         
         self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
+    
+    def UpdateToday(self, CsvFileName):
+        startDate=""
+        endDate=str(date.today())
         
+        csvFileName=CsvFileName
+        df=pd.read_csv(csvFileName, index_col="Date")
+        
+        
+        
+        startDate=df.index[df.shape[0]-1:]
+        startDate=str(np.datetime64(startDate[0])+np.timedelta64(1, 'D'))[0:10]
+
+        print(endDate)
+        print(startDate)
+        self.RetivingDataPrices_Yahoo(startDate,endDate,csvFileName,csvFileName)
+        #df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',utc=True,threads = True)

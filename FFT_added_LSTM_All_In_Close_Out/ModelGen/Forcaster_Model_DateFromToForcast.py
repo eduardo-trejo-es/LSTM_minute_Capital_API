@@ -35,19 +35,19 @@ class Forcast_Data:
     backDaysRef=120
     #Separate dates for future plotting
     Data_dates = df.index
-    print(Data_dates[0:5])
     Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
     #....... dates .....#
     #Dates_To_Use_To_Forcast=Data_dates[Data_dates.shape[0]-40:]
-    Dates_To_Use_To_Forcast=Data_dates[df.index.get_loc(dateFromForcast)-backDaysRef:df.index.get_loc(dateFromForcast)]
-
+    Dates_To_Use_To_Forcast=Data_dates[df.index.get_loc(dateFromForcast)-(backDaysRef-1):df.index.get_loc(dateFromForcast)+1]
+    
+    print(Dates_To_Use_To_Forcast)
+    
     Columns_N=df.shape[1]
     #Getting the columns name
     cols = list(df)[0:Columns_N]
     #New dataframe with only training data - 5 columns
     df_forcasting = df[cols].astype(float)
-
 
     #####       Scaling data     #####
 
@@ -55,11 +55,24 @@ class Forcast_Data:
 
     scaler = scaler.fit(df_forcasting)
     DS_raw_scaled = scaler.transform(df_forcasting)
+    
+    ####    Scaling only the close colum   ####
+  
+    df_forcasting_close=df_forcasting["Close"].to_numpy()
+    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting["Close"].to_numpy()),-1)
+    
+    scaler_Close = MinMaxScaler()
 
-    ####   getting the 40 most present data  ####
+    scaler_Close = scaler_Close.fit(df_forcasting_close)
 
-    Batch_to_predict=DS_raw_scaled[df.index.get_loc(dateFromForcast)-backDaysRef:df.index.get_loc(dateFromForcast)]
-    Batch_Real_Y_NonScaled=df_forcasting[df.index.get_loc(dateFromForcast)-1:df.shape[0]-1]
+    
+
+    ####   getting the 120 most present data  ####
+
+    Batch_to_predict=DS_raw_scaled[df.index.get_loc(dateFromForcast)-(backDaysRef-1):df.index.get_loc(dateFromForcast)+1]
+    #Batch_Real_Y_NonScaled=df_forcasting[df.index.get_loc(dateFromForcast)-1:df.shape[0]-1]
+    Batch_Real_Y_NonScaled=df_forcasting[df.index.get_loc(dateFromForcast)-(backDaysRef-2):df.index.get_loc(dateFromForcast)+2]
+    print("Batch_to_predict_Y_NonScaled: {}".format(Batch_to_predict))
     print("Batch_Real_Y_NonScaled: {}".format(Batch_Real_Y_NonScaled))
     
     Batch_Real_Y_NonScaled=np.array(Batch_Real_Y_NonScaled)
@@ -83,94 +96,28 @@ class Forcast_Data:
     #testingX=np.array(testingX)
     ######    Generating forcast data   ######
     for i in range(N_Days_to_predict):
-      prediction = model.predict(Batch_to_predict) #the input is a 30 units of time batch
-      prediction_Reshaped=np.reshape(prediction,(1,1,Columns_N))
-      Batch_to_predict=np.append(Batch_to_predict,prediction_Reshaped, axis=1)
-      Batch_to_predict=np.delete(Batch_to_predict,0,1)
+      prediction = model.predict(Batch_to_predict) #the input is a 120 units of time batch
       #print(Batch_to_predict.shape)
-      Prediction_Saved.append(prediction_Reshaped[0])
+      Prediction_Saved.append(prediction)
 
+    #####       Scaling Back close before prediction    #####
+    print("this is Batch_to_predict.shape"+str(Batch_to_predict.shape))
+    AllPrediction_DS_scaled_Back_1=scaler.inverse_transform(Batch_to_predict[0])
+    print(AllPrediction_DS_scaled_Back_1[119][3])
+    
     #####       Scaling Back     #####
     AllPrediction_DS_scaled_Back=[]
     for i in Prediction_Saved:
-      AllPrediction_DS_scaled_Back.append(scaler.inverse_transform(i))
+      AllPrediction_DS_scaled_Back.append(scaler_Close.inverse_transform(i))
     
-    predict_Open= []
-    predict_High= []
-    predict_Low= []
+    
     predict_Close= []
-    predict_Volume= []
-    predict_DayNumber= []
-    predict_FFT_Mag_Open_10= []
-    predict_FFT_Angl_Open_10= []
-    predict_FFT_Mag_Open_50= []
-    predict_FFT_Angl_Open_50= []
-    predict_FFT_Mag_Open_100= []
-    predict_FFT_Angl_Open_100= []
-    predict_FFT_Mag_High_10= []
-    predict_FFT_Angl_High_10= []
-    predict_FFT_Mag_High_50= []
-    predict_FFT_Angl_High_50= []
-    predict_FFT_Mag_High_100= []
-    predict_FFT_Angl_High_100= []
-    predict_FFT_Mag_Low_10= []
-    predict_FFT_Angl_Low_10= []
-    predict_FFT_Mag_Low_50= []
-    predict_FFT_Angl_Low_50= []
-    predict_FFT_Mag_Low_100= []
-    predict_FFT_Angl_Low_100= []
-    predict_FFT_Mag_Close_10= []
-    predict_FFT_Angl_Close_10= []
-    predict_FFT_Mag_Close_50= []
-    predict_FFT_Angl_Close_50= []
-    predict_FFT_Mag_Close_100= []
-    predict_FFT_Angl_Close_100= []
-    predict_FFT_Mag_Volume_10= []
-    predict_FFT_Angl_Volume_10= []
-    predict_FFT_Mag_Volume_50= []
-    predict_FFT_Angl_Volume_50= []
-    predict_FFT_Mag_Volume_100= []
-    predict_FFT_Angl_Volume_100= []
-
+    
     #Splitting data with scaling back
     for i in range(N_Days_to_predict):
       y_pred_future = AllPrediction_DS_scaled_Back[i]
-      predict_Open.append(y_pred_future[0][0])
-      predict_High.append(y_pred_future[0][1])
-      predict_Low.append(y_pred_future[0][2])
-      predict_Close.append(y_pred_future[0][3])
-      predict_Volume.append(y_pred_future[0][4])
-      predict_DayNumber.append(y_pred_future[0][5])
-      predict_FFT_Mag_Open_10.append(y_pred_future[0][6])
-      predict_FFT_Angl_Open_10.append(y_pred_future[0][7])
-      predict_FFT_Mag_Open_50.append(y_pred_future[0][8])
-      predict_FFT_Angl_Open_50.append(y_pred_future[0][9])
-      predict_FFT_Mag_Open_100.append(y_pred_future[0][10])
-      predict_FFT_Angl_Open_100.append(y_pred_future[0][11])
-      predict_FFT_Mag_High_10.append(y_pred_future[0][12])
-      predict_FFT_Angl_High_10.append(y_pred_future[0][13])
-      predict_FFT_Mag_High_50.append(y_pred_future[0][14])
-      predict_FFT_Angl_High_50.append(y_pred_future[0][15])
-      predict_FFT_Mag_High_100.append(y_pred_future[0][16])
-      predict_FFT_Angl_High_100.append(y_pred_future[0][17])
-      predict_FFT_Mag_Low_10.append(y_pred_future[0][18])
-      predict_FFT_Angl_Low_10.append(y_pred_future[0][19])
-      predict_FFT_Mag_Low_50.append(y_pred_future[0][20])
-      predict_FFT_Angl_Low_50.append(y_pred_future[0][21])
-      predict_FFT_Mag_Low_100.append(y_pred_future[0][22])
-      predict_FFT_Angl_Low_100.append(y_pred_future[0][23])
-      predict_FFT_Mag_Close_10.append(y_pred_future[0][24])
-      predict_FFT_Angl_Close_10.append(y_pred_future[0][25])
-      predict_FFT_Mag_Close_50.append(y_pred_future[0][26])
-      predict_FFT_Angl_Close_50.append(y_pred_future[0][27])
-      predict_FFT_Mag_Close_100.append(y_pred_future[0][28])
-      predict_FFT_Angl_Close_100.append(y_pred_future[0][29])
-      predict_FFT_Mag_Volume_10.append(y_pred_future[0][30])
-      predict_FFT_Angl_Volume_10.append(y_pred_future[0][31])
-      predict_FFT_Mag_Volume_50.append(y_pred_future[0][32])
-      predict_FFT_Angl_Volume_50.append(y_pred_future[0][33])
-      predict_FFT_Mag_Volume_100.append(y_pred_future[0][34])
-      predict_FFT_Angl_Volume_100.append(y_pred_future[0][35])
+      predict_Close.append(y_pred_future)
+      
       
     ####################################### 
     #      Getting the candle chart       #
@@ -190,18 +137,17 @@ class Forcast_Data:
       
     #####        splitting Real y    #####
     
-    Real_Y_Open=[]
-    Real_Y_High=[]
-    Real_Y_Low=[]
-    Real_Y_Close=[]
-    Real_Y_Volume=[]
+    
+    Real_Y_Close=0
+   
     
     #Splitting data  real Y
+    #print("The shape of Batch_Real_Y_NonScaled: " + str(Batch_Real_Y_NonScaled.shape))
+    Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][3]
+    Batch_Real_Y_NonScaled
+
+    predict_Close=predict_Close[0][0]
     
-    for i in Batch_Real_Y_NonScaled:
-      Real_Y_Close.append(i[1])
-      
-      
     print(predict_Close)
     print(Real_Y_Close)
     plt.plot(predict_Close,'--g*')
