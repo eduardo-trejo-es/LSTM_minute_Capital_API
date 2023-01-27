@@ -111,12 +111,12 @@ class Forcast_Data:
       AllPrediction_DS_scaled_Back.append(scaler_Close.inverse_transform(i))
     
     
-    predict_Close= []
+    Forcast_Close= []
     
     #Splitting data with scaling back
     for i in range(N_Days_to_predict):
       y_pred_future = AllPrediction_DS_scaled_Back[i]
-      predict_Close.append(y_pred_future)
+      Forcast_Close.append(y_pred_future)
       
       
     ####################################### 
@@ -139,32 +139,25 @@ class Forcast_Data:
     
     
     Real_Y_Close=0
+    Real_Y_current=0
    
     
     #Splitting data  real Y
     #print("The shape of Batch_Real_Y_NonScaled: " + str(Batch_Real_Y_NonScaled.shape))
     Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][3]
+    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][3]
     Batch_Real_Y_NonScaled
 
-    predict_Close=predict_Close[0][0]
+    Forcast_Close=Forcast_Close[0][0]
+    Forcast_Close=Forcast_Close[0]
     
-    print(predict_Close)
+    print(Forcast_Close)
     print(Real_Y_Close)
-    plt.plot(predict_Close,'--g*')
-    plt.plot(Real_Y_Close, '--ro')
-    #plt.plot(predict_Close,'g', Real_Y_Close, 'r')
-    plt.show()
+    
+    
+    return Real_Y_current,Forcast_Close,Real_Y_Close
+    
       
-      
-    """"
-    #--------  data shape it's (x days, 5 columns)
-    # Convert timestamp to date
-    df_forecast = pd.DataFrame({'Open':predict_Open,'High':predict_High, 'Low':predict_Low,'Close':predict_Close,'Volume':predict_Volume}, index=Forcasted_Dates)
-
-    df_forecast.index.name="Date"
-
-    title_chart="Twtr bid"
-    return mpf.plot(df_forecast, type='candle',title=title_chart, style='charles')"""
   
   def to_forcast_close_true_and_forcasted(self,n_units_to_predict,model_Path,dateFromForcast):
     ########     Getting the Data      ######
