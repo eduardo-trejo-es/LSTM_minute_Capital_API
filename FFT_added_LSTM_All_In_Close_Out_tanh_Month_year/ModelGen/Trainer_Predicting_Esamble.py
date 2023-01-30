@@ -55,43 +55,8 @@ class Model_Trainer:
     scaler = scaler.fit(df_for_training)
     DS_raw_scaled = scaler.transform(df_for_training)
 
-    #Scaling for OutPuts "Y" colums
-    #DS_raw_Open_scaled=DS_raw_scaled[:,[0]]
-    #DS_raw_High_scaled=DS_raw_scaled[:,[1]]
-    #DS_raw_Low_scaled=DS_raw_scaled[:,[2]]
     DS_raw_Close_scaled=DS_raw_scaled[:,[3]]
-    #DS_raw_Volume_scaled=DS_raw_scaled[:,[4]]
-    #DS_raw_DayNumber_scaled=DS_raw_scaled[:,[5]]
-    #DS_raw_FFT_Mag_Open_10_scaled=DS_raw_scaled[:,[6]]
-    #DS_raw_FFT_Angl_Open_10_scaled=DS_raw_scaled[:,[7]]
-    #DS_raw_FFT_Mag_Open_50_scaled=DS_raw_scaled[:,[8]]
-    #DS_raw_FFT_Angl_Open_50_scaled=DS_raw_scaled[:,[9]]
-    #DS_raw_FFT_Mag_Open_100_scaled=DS_raw_scaled[:,[10]]
-    #DS_raw_FFT_Angl_Open_100_scaled=DS_raw_scaled[:,[11]]
-    #DS_raw_FFT_Mag_High_10_scaled=DS_raw_scaled[:,[12]]
-    #DS_raw_FFT_Angl_High_10_scaled=DS_raw_scaled[:,[13]]
-    #DS_raw_FFT_Mag_High_50_scaled=DS_raw_scaled[:,[14]]
-    #DS_raw_FFT_Angl_High_50_scaled=DS_raw_scaled[:,[15]]
-    #DS_raw_FFT_Mag_High_100_scaled=DS_raw_scaled[:,[16]]
-    #DS_raw_FFT_Angl_High_100_scaled=DS_raw_scaled[:,[17]]
-    #DS_raw_FFT_Mag_Low_10_scaled=DS_raw_scaled[:,[18]]
-    #DS_raw_FFT_Angl_Low_10_scaled=DS_raw_scaled[:,[19]]
-    #DS_raw_FFT_Mag_Low_50_scaled=DS_raw_scaled[:,[20]]
-    #DS_raw_FFT_Angl_Low_50_scaled=DS_raw_scaled[:,[21]]
-    #DS_raw_FFT_Mag_Low_100_scaled=DS_raw_scaled[:,[22]]
-    #DS_raw_FFT_Angl_Low_100_scaled=DS_raw_scaled[:,[23]]
-    #DS_raw_FFT_Mag_Close_10_scaled=DS_raw_scaled[:,[24]]
-    #DS_raw_FFT_Angl_Close_10_scaled=DS_raw_scaled[:,[25]]
-    #DS_raw_FFT_Mag_Close_50_scaled=DS_raw_scaled[:,[26]]
-    #DS_raw_FFT_Angl_Close_50_scaled=DS_raw_scaled[:,[27]]
-    #DS_raw_FFT_Mag_Close_100_scaled=DS_raw_scaled[:,[28]]
-    #DS_raw_FFT_Angl_Close_100_scaled=DS_raw_scaled[:,[29]]
-    #DS_raw_FFT_Mag_Volume_10_scaled=DS_raw_scaled[:,[30]]
-    #DS_raw_FFT_Angl_Volume_10_scaled=DS_raw_scaled[:,[31]]
-    #DS_raw_FFT_Mag_Volume_50_scaled=DS_raw_scaled[:,[32]]
-    #DS_raw_FFT_Angl_Volume_50_scaled=DS_raw_scaled[:,[33]]
-    #DS_raw_FFT_Mag_Volume_100_scaled=DS_raw_scaled[:,[34]]
-    #DS_raw_FFT_Angl_Volume_100_scaled=DS_raw_scaled[:,[35]]
+
 
     
     #Empty lists to be populated using formatted training data
@@ -171,7 +136,7 @@ class Model_Trainer:
     
     early_stop= EarlyStopping(monitor='val_loss',mode='min',verbose=1,patience=25)
     
-    model.fit(x=trainX,y=y_data, epochs=20, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
+    model.fit(x=trainX,y=y_data, epochs=5, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
     #history = model.fit(trainX,y=y_data, epochs=125, batch_size=15)
 
 
