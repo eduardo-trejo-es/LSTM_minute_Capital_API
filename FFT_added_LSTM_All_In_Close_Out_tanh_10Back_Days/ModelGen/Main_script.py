@@ -6,18 +6,18 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-Model_Path="FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added"
-Data_CSV="FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv"
-percentageData=95
-forcastPath="FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/ModelGen/Forcasts/Focast28_01_2023.csv"
+Model_Path="FFT_added_LSTM_All_In_Close_Out_tanh_10Back_Days/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added"
+Data_CSV="FFT_added_LSTM_All_In_Close_Out_tanh_10Back_Days/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv"
+percentageData=100
+forcastPath="FFT_added_LSTM_All_In_Close_Out_tanh_10Back_Days/ModelGen/Forcasts/Focast28_01_2023.csv"
 
-trainer_model = Model_Trainer()
+#trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Data_CSV)
 
 #training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
-Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,"2023-01-30 00:00:00")
+#Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,"2023-01-29 00:00:00")
 
-"""########## forcasting instuctions below ########
+########## forcasting instuctions below ########
 
 
 df=pd.read_csv(Data_CSV,index_col=0)
@@ -37,7 +37,7 @@ indexDates=df.index
 locpercentage=int((indexDates.shape[0]*percentageData)/100)
 
 #datefiltredPercentage=indexDates[locpercentage:]
-datefiltredPercentage=indexDates[indexDates.shape[0]-150:]
+datefiltredPercentage=indexDates[indexDates.shape[0]-20:]
 for i in datefiltredPercentage:
     print(i)
     Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,str(i))
@@ -54,10 +54,15 @@ for i in datefiltredPercentage:
 
 ensambly_fin=pd.DataFrame({'Current':ColumnCurrent_Close_Day,'Forcast':ColumnForcast_Close_Day,'Real':ColumnReal_Close_Day})
 
+
+plt.plot(ColumnForcast_Close_Day,label='ColumnForcast_Close_Day')
+plt.plot(ColumnReal_Close_Day,label='ColumnReal_Close_Day')
+    #plt.plot([1,2,3,4])
+plt.show()
 #np.insert(a, a.shape[1], np.array((10, 10, 10, 10)), 1)
 #print(ensambly_np.shape)
 #print(ensambly_np.shape)
     # to convert to CSV
 
-ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)"""
+ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
 
