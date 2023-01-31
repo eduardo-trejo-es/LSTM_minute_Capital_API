@@ -8,18 +8,19 @@ from matplotlib import pyplot as plt
 
 Model_Path="FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added"
 Data_CSV="FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv"
-percentageData=85
+percentageData=100
 forcastPath="FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/ModelGen/Forcasts/Focast28_01_2023.csv"
 
 trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Data_CSV)
 
-training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
+#training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
+Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,"2023-01-29 00:00:00")
 
-########## forcasting instuctions below ########
+"""########## forcasting instuctions below ########
 
 
-"""df=pd.read_csv(Data_CSV,index_col=0)
+df=pd.read_csv(Data_CSV,index_col=0)
 
 locpercentage=0
 ColumnCurrent_Close_Day=[]
@@ -58,6 +59,5 @@ ensambly_fin=pd.DataFrame({'Current':ColumnCurrent_Close_Day,'Forcast':ColumnFor
 #print(ensambly_np.shape)
     # to convert to CSV
 
-ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
-"""
+ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)"""
 
