@@ -17,7 +17,7 @@ forcaster = Forcast_Data(Data_CSV)
 #training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
 Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,"2023-01-30 00:00:00")
 
-"""########## forcasting instuctions below ########
+########## forcasting instuctions below ########
 
 
 df=pd.read_csv(Data_CSV,index_col=0)
@@ -49,15 +49,20 @@ for i in datefiltredPercentage:
     print(ColumnForcast_Close_Day)
     print(ColumnReal_Close_Day)
     
-    if i == datefiltredPercentage[len(datefiltredPercentage)-2]: break
+    #if i == datefiltredPercentage[len(datefiltredPercentage)-2]: break
 
 
 ensambly_fin=pd.DataFrame({'Current':ColumnCurrent_Close_Day,'Forcast':ColumnForcast_Close_Day,'Real':ColumnReal_Close_Day})
 
+
+plt.plot(ColumnForcast_Close_Day,label='ColumnForcast_Close_Day')
+plt.plot(ColumnReal_Close_Day,label='ColumnReal_Close_Day')
+    #plt.plot([1,2,3,4])
+plt.show()
 #np.insert(a, a.shape[1], np.array((10, 10, 10, 10)), 1)
 #print(ensambly_np.shape)
 #print(ensambly_np.shape)
     # to convert to CSV
 
-ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)"""
+ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
 
