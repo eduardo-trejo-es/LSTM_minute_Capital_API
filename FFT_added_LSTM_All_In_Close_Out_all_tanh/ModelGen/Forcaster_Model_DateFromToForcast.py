@@ -32,7 +32,7 @@ class Forcast_Data:
     N_units_to_predict=n_units_to_predict
     Model_Path=model_Path
     df=pd.read_csv(self.csvFileName,index_col=0)
-    backDaysRef=10
+    backDaysRef=120
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
@@ -103,7 +103,7 @@ class Forcast_Data:
     #####       Scaling Back close before prediction    #####
     print("this is Batch_to_predict.shape"+str(Batch_to_predict.shape))
     AllPrediction_DS_scaled_Back_1=scaler.inverse_transform(Batch_to_predict[0])
-    #print(AllPrediction_DS_scaled_Back_1[backDaysRef-1][3])
+    print(AllPrediction_DS_scaled_Back_1[119][3])
     
     #####       Scaling Back     #####
     AllPrediction_DS_scaled_Back=[]
