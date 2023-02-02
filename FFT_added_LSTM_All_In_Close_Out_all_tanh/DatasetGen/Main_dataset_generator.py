@@ -6,15 +6,15 @@ dataSet_Gen= DatasetGenerator()
 
 #dataSet_Gen.RetivingDataPrices_Yahoo('2000-08-23', '2023-01-20',"FFT_added_LSTM/DatasetGen/CRUDE_OIL/CRUDE_OIL_DataCSV","FFT_added_LSTM/DatasetGen/CRUDE_OIL/CRUDE_OIL_DataCSV")
 
-dataSet_Gen.UpdateToday("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv")
+#dataSet_Gen.UpdateToday("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv")
 
 
 
-dataSet_Gen.AddColumnWeekDay("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv", "FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv",False)
+#dataSet_Gen.AddColumnWeekDay("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv", "FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv",False)
 
-dataSet_Gen.AddColumnMoth("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv", "FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv",False)
+#dataSet_Gen.AddColumnMoth("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv", "FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv",False)
 
-dataSet_Gen.AddColumnYear("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv","FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv")
+#dataSet_Gen.AddColumnYear("FFT_added_LSTM_All_In_Close_Out_all_tanh/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv","FFT_added_LSTM_All_In_Close_Out_tanh_Month_year/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv")
 
 #Generate new FFT columns done :)
 

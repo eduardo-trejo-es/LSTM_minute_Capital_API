@@ -105,6 +105,8 @@ class DatasetGenerator:
         Colum_Used=column_to_use
 
         data_FT = df[Colum_Used]
+        print(type(data_FT))
+        print(data_FT[0])
         
         
         dateIndex=[]
@@ -113,8 +115,12 @@ class DatasetGenerator:
             
             
         array_like=np.asarray(data_FT).tolist()
+        print(type(array_like))
+        print(array_like[0])
         The_fft = np.fft.fft(array_like)
+        print(The_fft[0]) 
         fft_df =pd.DataFrame({'fft':The_fft})
+        
         fft_df['absolute']=fft_df['fft'].apply(lambda x: np.abs(x))
         fft_df['angle']=fft_df['fft'].apply(lambda x: np.angle(x))
         fft_list = np.asarray(fft_df['fft'].tolist())
