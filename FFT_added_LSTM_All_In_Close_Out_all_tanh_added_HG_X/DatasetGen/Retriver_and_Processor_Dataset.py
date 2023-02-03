@@ -205,24 +205,22 @@ class DatasetGenerator:
             elif i.find("Steel_X")!=-1:
                 itemName="_Steel_X"
             list_Orig_Columns=existing.columns
-            lsit_New_Columns=[]
-            for i in list_Orig_Columns:
-                lsit_New_Columns.append(i+itemName)
+            list_New_Columns=[]
+            
+            for k in list_Orig_Columns:
+                list_New_Columns.append(k+itemName)
             
             
             dict_Columns={}
             for j in range(0,len(list_Orig_Columns)):
-                dict_Columns[list_Orig_Columns[j]]=lsit_New_Columns[j]
+                dict_Columns[list_Orig_Columns[j]]=list_New_Columns[j]
                 
-            #print(dict_Columns)
             existing_Columns_Renamed=existing.rename(columns=dict_Columns)
             
-            print(existing_Columns_Renamed.head)
             
             Last_pd = pd.concat([Last_pd,existing_Columns_Renamed], axis=1)
-            Last_pd.index.name = "Date"
             
-    
-                
         
+        Last_pd.index.name='Date'
+        print(Last_pd.shape)
         self.SavingDataset(Last_pd,NewFIleName, NewFIleName,False)

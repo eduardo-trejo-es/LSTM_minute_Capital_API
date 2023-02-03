@@ -15,10 +15,10 @@ trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Data_CSV)
 
 #training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
-#Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,"2023-01-10")
+Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,Model_Path,"2023-02-01")
 
 ########## forcasting instuctions below ########
-
+"""
 
 df=pd.read_csv(Data_CSV,index_col=0)
 
@@ -65,3 +65,4 @@ plt.show()
     # to convert to CSV
 
 ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
+"""

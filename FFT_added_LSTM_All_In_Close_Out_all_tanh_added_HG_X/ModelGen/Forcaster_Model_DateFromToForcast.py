@@ -24,13 +24,14 @@ from tensorflow.python.keras.layers.core import Activation
 
 
 class Forcast_Data:
-  def __init__(self,data_frame_Path):
+  def __init__(self,Model_Path,data_frame_Path):
     self.csvFileName=data_frame_Path
+    self.model = keras.models.load_model(Model_Path)
     
-  def ToForcast(self,n_units_to_predict,model_Path,dateFromForcast):
+  def ToForcast(self,n_units_to_predict,dateFromForcast):
   ########     Getting the Data      ######
     N_units_to_predict=n_units_to_predict
-    Model_Path=model_Path
+    #Model_Path=model_Path
     df=pd.read_csv(self.csvFileName,index_col=0)
     backDaysRef=120
     #Separate dates for future plotting
@@ -41,7 +42,7 @@ class Forcast_Data:
     #Dates_To_Use_To_Forcast=Data_dates[Data_dates.shape[0]-40:]
     Dates_To_Use_To_Forcast=Data_dates[df.index.get_loc(dateFromForcast)-(backDaysRef-1):df.index.get_loc(dateFromForcast)+1]
     
-    print(Dates_To_Use_To_Forcast)
+    #print(Dates_To_Use_To_Forcast)
     
     Columns_N=df.shape[1]
     #Getting the columns name
@@ -57,9 +58,9 @@ class Forcast_Data:
     DS_raw_scaled = scaler.transform(df_forcasting)
     
     ####    Scaling only the close colum   ####
-  
-    df_forcasting_close=df_forcasting["Close"].to_numpy()
-    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting["Close"].to_numpy()),-1)
+    print(dateFromForcast)
+    df_forcasting_close=df_forcasting[cols[3]].to_numpy()
+    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[3]].to_numpy()),-1)
     
     scaler_Close = MinMaxScaler()
 
@@ -72,8 +73,8 @@ class Forcast_Data:
     Batch_to_predict=DS_raw_scaled[df.index.get_loc(dateFromForcast)-(backDaysRef-1):df.index.get_loc(dateFromForcast)+1]
     #Batch_Real_Y_NonScaled=df_forcasting[df.index.get_loc(dateFromForcast)-1:df.shape[0]-1]
     Batch_Real_Y_NonScaled=df_forcasting[df.index.get_loc(dateFromForcast)-(backDaysRef-2):df.index.get_loc(dateFromForcast)+2]
-    print("Batch_to_predict_Y_NonScaled: {}".format(Batch_to_predict))
-    print("Batch_Real_Y_NonScaled: {}".format(Batch_Real_Y_NonScaled))
+    #print("Batch_to_predict_Y_NonScaled: {}".format(Batch_to_predict))
+    #print("Batch_Real_Y_NonScaled: {}".format(Batch_Real_Y_NonScaled))
     
     Batch_Real_Y_NonScaled=np.array(Batch_Real_Y_NonScaled)
     #....... databatch .....#
@@ -83,7 +84,7 @@ class Forcast_Data:
     ##############      Retriving model       ########
 
 
-    model = keras.models.load_model(Model_Path)
+    #model = keras.models.load_model(Model_Path)
 
 
     ##########################################
@@ -96,14 +97,14 @@ class Forcast_Data:
     #testingX=np.array(testingX)
     ######    Generating forcast data   ######
     for i in range(N_Days_to_predict):
-      prediction = model.predict(Batch_to_predict) #the input is a 120 units of time batch
+      prediction = self.model.predict(Batch_to_predict) #the input is a 120 units of time batch
       #print(Batch_to_predict.shape)
       Prediction_Saved.append(prediction)
 
     #####       Scaling Back close before prediction    #####
-    print("this is Batch_to_predict.shape"+str(Batch_to_predict.shape))
+    #print("this is Batch_to_predict.shape"+str(Batch_to_predict.shape))
     AllPrediction_DS_scaled_Back_1=scaler.inverse_transform(Batch_to_predict[0])
-    print(AllPrediction_DS_scaled_Back_1[119][3])
+    #print(AllPrediction_DS_scaled_Back_1[119][3])
     
     #####       Scaling Back     #####
     AllPrediction_DS_scaled_Back=[]
@@ -151,8 +152,8 @@ class Forcast_Data:
     Forcast_Close=Forcast_Close[0][0]
     Forcast_Close=Forcast_Close[0]
     
-    print(Forcast_Close)
-    print(Real_Y_Close)
+    #print(Forcast_Close)
+    #print(Real_Y_Close)
     
     
     return Real_Y_current,Forcast_Close,Real_Y_Close

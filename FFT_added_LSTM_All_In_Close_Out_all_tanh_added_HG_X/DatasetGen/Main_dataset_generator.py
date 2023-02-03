@@ -4,11 +4,11 @@ dataSet_Gen= DatasetGenerator()
 
 
 item_to_use=2
+dateStart='2001-01-01'
+dateEnd= '2023-02-03'
 
 if item_to_use==0 :
     #######______________ CRUDE_Oil 'CL=F' _____________  ################
-    dateStart='2001-01-01'
-    dateEnd= '2023-02-01'
     itemName='CL=F'
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
     DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
@@ -17,8 +17,6 @@ if item_to_use==0 :
     FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv"
 elif item_to_use==1:
     #######______________ Copper 'GH_F' _____________  ################
-    dateStart='2001-01-01'
-    dateEnd= '2023-02-01'
     itemName='HG=F'
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data.csv"
     DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_DayNum.csv"
@@ -27,15 +25,12 @@ elif item_to_use==1:
     FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_FFT_10_50_100.csv"
 else:
     #######______________ Steel  'X' _____________  ################
-    dateStart='2001-01-01'
-    dateEnd= '2023-02-01'
     itemName='X'
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Steel_X/Steel_Data.csv"
     DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_DayNum.csv"
     MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Steel_X/Steel_Data_And_month.csv"
     yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Steel_X/Steel_Data_And_year.csv"
     FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_FFT_10_50_100.csv"
-
 
 
 """
@@ -66,8 +61,8 @@ for i in Column:
         else:   
             dataSet_Gen.Add_ColumsFourier_Transform(j,i,FFTNew_FileData,FFTNew_FileData)
 """
-path_CSV_df=["FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_FFT_10_50_100.csv",
-             "FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv",
+path_CSV_df=["FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv",
+             "FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_FFT_10_50_100.csv",
              "FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_FFT_10_50_100.csv"]
 
 combined_path="FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/DatasetGen/Combined_GH_F_CL_F_X/CombinedGH_F_CL_F_X.csv"

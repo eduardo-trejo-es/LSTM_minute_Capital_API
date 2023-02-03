@@ -20,7 +20,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
 n_past =120
-Columns_N=38
+Columns_N=114
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
@@ -73,4 +73,4 @@ print(model.summary())
 
 #tf.keras.utils.plot_model(model, "FFT_added_LSTM/ModelGen/Model/Model_LSTM_31_FFT.png", show_shapes=True)
 
-model.save("FFT_added_LSTM_All_In_Close_Out_all_tanh/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added")
+model.save("FFT_added_LSTM_All_In_Close_Out_all_tanh_added_HG_X/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added")
