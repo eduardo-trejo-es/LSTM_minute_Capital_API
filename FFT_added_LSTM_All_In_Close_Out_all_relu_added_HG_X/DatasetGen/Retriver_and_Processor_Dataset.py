@@ -191,6 +191,21 @@ class DatasetGenerator:
         print(startDate)
         self.RetivingDataPrices_Yahoo(startDate,endDate,csvFileName,csvFileName)
         #df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',utc=True,threads = True)
+    
+    
+    def deleterRowWhenNull(self,dataFrame):
+        df_isnull=dataFrame.isnull().any(axis=1)
+        df_isnull_index=dataFrame.index
+        print(df_isnull_index)
+        index_when_null=[]
+        index_num=0
+        for i in df_isnull:
+            if i :index_when_null.append(df_isnull_index[index_num])
+            index_num+=1
+        print(index_when_null)
+        dataFrame.drop(index_when_null, axis=0, inplace=True)
+
+        return dataFrame
         
     def dfCombiner(self,PathListdf,NewFIleName):
         Last_pd=pd.DataFrame({})
@@ -221,6 +236,7 @@ class DatasetGenerator:
             Last_pd = pd.concat([Last_pd,existing_Columns_Renamed], axis=1)
             
         
+        Last_pd=self.deleterRowWhenNull(Last_pd)
         Last_pd.index.name='Date'
         print(Last_pd.shape)
         self.SavingDataset(Last_pd,NewFIleName, NewFIleName,False)
