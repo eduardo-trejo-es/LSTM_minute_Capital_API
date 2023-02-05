@@ -29,7 +29,7 @@ class Forcast_Data:
     self.model = keras.models.load_model(Model_Path)
     
   def ToForcast(self,n_units_to_predict,dateFromForcast):
-  ########     Getting the Data      ######
+  ########     Getting the D     ######
     N_units_to_predict=n_units_to_predict
     #Model_Path=model_Path
     df=pd.read_csv(self.csvFileName,index_col=0)
