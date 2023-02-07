@@ -29,7 +29,7 @@ LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_seq
 
 Dropout_layer2=keras.layers.Dropout(0.2)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(90, return_sequences=False,activation='relu')(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(600, return_sequences=False,activation='relu')(Dropout_layer2)
 
 Dropout_layer3=keras.layers.Dropout(0.2)(LSTM_Layer2)# modify
 

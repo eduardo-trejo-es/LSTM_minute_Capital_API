@@ -8,20 +8,21 @@ from matplotlib import pyplot as plt
 
 Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added"
 Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Combined_GH_F_CL_F_X/CombinedGH_F_CL_F_X.csv"
-percentageData=99
+percentageData=100
 forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Forcasts/Focast28_01_2023.csv"
 
 trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Model_Path,Data_CSV)
 
 #training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
+"""
 Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,"2023-02-03 00:00:00")
 
 print(Real_Y_Forcast)
 print(Real_Y_Close)
+"""
 ########## forcasting instuctions below ########
 
-"""
 df=pd.read_csv(Data_CSV,index_col=0)
 
 locpercentage=0
@@ -67,5 +68,3 @@ plt.show()
     # to convert to CSV
 
 ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
-
-"""
