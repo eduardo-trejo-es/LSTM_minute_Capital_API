@@ -59,8 +59,9 @@ class Forcast_Data:
     
     ####    Scaling only the close colum   ####
     print(dateFromForcast)
-    df_forcasting_close=df_forcasting[cols[3]].to_numpy()
-    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[3]].to_numpy()),-1)
+    #df_forcasting_close=df_forcasting[cols[3]].to_numpy()
+    df_forcasting_close=df_forcasting[cols[8]].to_numpy()
+    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[8]].to_numpy()),-1)
     
     scaler_Close = MinMaxScaler()
 
@@ -145,8 +146,10 @@ class Forcast_Data:
     
     #Splitting data  real Y
     #print("The shape of Batch_Real_Y_NonScaled: " + str(Batch_Real_Y_NonScaled.shape))
-    Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][3]
-    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][3]
+    """Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][3]
+    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][3]"""
+    Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][8]
+    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][8]
     Batch_Real_Y_NonScaled
 
     Forcast_Close=Forcast_Close[0][0]

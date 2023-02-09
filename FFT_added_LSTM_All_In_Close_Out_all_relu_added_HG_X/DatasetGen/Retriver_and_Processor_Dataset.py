@@ -240,3 +240,43 @@ class DatasetGenerator:
         Last_pd.index.name='Date'
         print(Last_pd.shape)
         self.SavingDataset(Last_pd,NewFIleName, NewFIleName,False)
+    
+    def AddColumnPRCNTG(self,csvFileName, csvFileName_New):
+        df=pd.read_csv(csvFileName, index_col="Date")
+    
+        columns_list=df.columns[0:5]
+
+        indexDatesList=[]
+        indexDatesDic={}
+        for o in df.index:
+            indexDatesList.append(o)
+            
+        ListPercentages=[]
+        val_n=0
+        val_n_1=0
+        percentage_n_1=0
+        First_val=True
+        df_percentage=pd.DataFrame()
+        for columns in columns_list:
+            accu_=0
+            First_val=True
+            ListPercentages=[]
+            for rows in df[columns]:
+                val_n_1=rows
+            
+                if First_val==True:
+                    First_val=False
+                    ListPercentages.append(0)
+                else:
+                    try:
+                        percentage_n_1=((val_n_1*100)/val_n)-100
+                    except:
+                        percentage_n_1=((val_n_1*100)/1)-100
+                    ListPercentages.append(percentage_n_1)
+                val_n=val_n_1
+            
+            df[columns+"_PRCNTG"]=ListPercentages
+        df['Date']=indexDatesList
+        df_percentage=df.set_index('Date')
+                    
+        self.SavingDataset(df_percentage,csvFileName, csvFileName_New,False)

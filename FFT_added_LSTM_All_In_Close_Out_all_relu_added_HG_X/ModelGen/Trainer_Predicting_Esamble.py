@@ -55,8 +55,8 @@ class Model_Trainer:
     scaler = scaler.fit(df_for_training)
     DS_raw_scaled = scaler.transform(df_for_training)
 
-    DS_raw_Close_scaled=DS_raw_scaled[:,[3]]
-
+    #DS_raw_Close_scaled=DS_raw_scaled[:,[3]]
+    DS_raw_Close_scaled=DS_raw_scaled[:,[8]]
 
     
     #Empty lists to be populated using formatted training data

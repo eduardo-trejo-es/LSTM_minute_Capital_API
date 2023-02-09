@@ -20,7 +20,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
 n_past =120
-Columns_N=114
+Columns_N=86
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
@@ -29,7 +29,7 @@ LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_seq
 
 Dropout_layer2=keras.layers.Dropout(0.2)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(600, return_sequences=False,activation='relu')(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(1200, return_sequences=False,activation='relu')(Dropout_layer2)
 
 Dropout_layer3=keras.layers.Dropout(0.2)(LSTM_Layer2)# modify
 

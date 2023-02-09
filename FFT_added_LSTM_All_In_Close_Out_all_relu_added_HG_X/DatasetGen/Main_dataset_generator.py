@@ -3,14 +3,15 @@ from Retriver_and_Processor_Dataset import *
 dataSet_Gen= DatasetGenerator()
 
 
-item_to_use=2
+item_to_use=0
 dateStart='2001-01-01'
-dateEnd= '2023-02-04'
+dateEnd= '2023-02-09'
 
 if item_to_use==0 :
     #######______________ CRUDE_Oil 'CL=F' _____________  ################
     itemName='CL=F'
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
+    PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_PRCNTG.csv"
     DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
     MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv"
     yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv"
@@ -19,6 +20,7 @@ elif item_to_use==1:
     #######______________ Copper 'GH_F' _____________  ################
     itemName='HG=F'
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data.csv"
+    PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_PRCNTG.csv"
     DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_DayNum.csv"
     MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_And_month.csv"
     yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_And_year.csv"
@@ -27,6 +29,7 @@ else:
     #######______________ Steel  'X' _____________  ################
     itemName='X'
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data.csv"
+    PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_PRCNTG.csv"
     DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_DayNum.csv"
     MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_And_month.csv"
     yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_And_year.csv"
@@ -36,9 +39,11 @@ else:
 """
 dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
 
+dataSet_Gen.AddColumnPRCNTG(Original_Path_Retiving,PRCNTGAddedPath)
+
 #dataSet_Gen.UpdateToday(Original_Path_Retiving)
 
-dataSet_Gen.AddColumnWeekDay(Original_Path_Retiving, DayNumAddedPath,False)
+dataSet_Gen.AddColumnWeekDay(PRCNTGAddedPath, DayNumAddedPath,False)
 
 dataSet_Gen.AddColumnMoth(DayNumAddedPath, MonthAddedPath,False)
 
@@ -62,8 +67,7 @@ for i in Column:
             dataSet_Gen.Add_ColumsFourier_Transform(j,i,FFTNew_FileData,FFTNew_FileData)
 """
 path_CSV_df=["FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv",
-             "FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_FFT_10_50_100.csv",
-             "FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_FFT_10_50_100.csv"]
+             "FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_FFT_10_50_100.csv",]
 
 combined_path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Combined_GH_F_CL_F_X/CombinedGH_F_CL_F_X.csv"
 dataSet_Gen.dfCombiner(path_CSV_df,combined_path)

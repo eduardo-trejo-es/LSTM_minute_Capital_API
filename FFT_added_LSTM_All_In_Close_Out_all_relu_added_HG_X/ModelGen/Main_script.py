@@ -16,8 +16,8 @@ forcaster = Forcast_Data(Model_Path,Data_CSV)
 
 #training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
 """
-Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,"2023-02-03 00:00:00")
-
+Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,"2023-02-08")
+print(Real_Y_current)
 print(Real_Y_Forcast)
 print(Real_Y_Close)
 """
@@ -40,7 +40,7 @@ indexDates=df.index
 locpercentage=int((indexDates.shape[0]*percentageData)/100)
 
 #datefiltredPercentage=indexDates[locpercentage:]
-datefiltredPercentage=indexDates[indexDates.shape[0]-100:]
+datefiltredPercentage=indexDates[indexDates.shape[0]-5:]
 for i in datefiltredPercentage:
     print(i)
     Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,str(i))
