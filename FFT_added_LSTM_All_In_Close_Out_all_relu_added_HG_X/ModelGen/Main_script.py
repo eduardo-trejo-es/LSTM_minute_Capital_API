@@ -14,15 +14,15 @@ forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Forcas
 trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Model_Path,Data_CSV)
 
-#training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
-"""
+training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
+"""  
 Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,"2023-02-08")
 print(Real_Y_current)
 print(Real_Y_Forcast)
-print(Real_Y_Close)
+print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
-
+"""
 df=pd.read_csv(Data_CSV,index_col=0)
 
 locpercentage=0
@@ -40,7 +40,7 @@ indexDates=df.index
 locpercentage=int((indexDates.shape[0]*percentageData)/100)
 
 #datefiltredPercentage=indexDates[locpercentage:]
-datefiltredPercentage=indexDates[indexDates.shape[0]-5:]
+datefiltredPercentage=indexDates[indexDates.shape[0]-100:]
 for i in datefiltredPercentage:
     print(i)
     Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,str(i))
@@ -68,3 +68,4 @@ plt.show()
     # to convert to CSV
 
 ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
+"""

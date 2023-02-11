@@ -25,17 +25,17 @@ Columns_N=86
 inputs=keras.Input(shape=(n_past,Columns_N))
 
 
-LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_sequences=True, activation='relu')(inputs)
+LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_sequences=True, activation='ReLU')(inputs)
 
 Dropout_layer2=keras.layers.Dropout(0.2)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(1200, return_sequences=False,activation='relu')(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(1200, return_sequences=False,activation='ReLU')(Dropout_layer2)
 
 Dropout_layer3=keras.layers.Dropout(0.2)(LSTM_Layer2)# modify
 
 
 #---------------------------Outputs
-dense=keras.layers.Dense(1,activation='relu')(Dropout_layer3)
+dense=keras.layers.Dense(1,activation='ReLU')(Dropout_layer3)
 
 
 
@@ -73,4 +73,4 @@ print(model.summary())
 
 #tf.keras.utils.plot_model(model, "FFT_added_LSTM/ModelGen/Model/Model_LSTM_31_FFT.png", show_shapes=True)
 
-model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added")
+model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Model_LSTM_31_FFT_32_in_1_out_tanh_added",save_format="h5")
