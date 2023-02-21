@@ -157,10 +157,10 @@ class DatasetGenerator:
         
         self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
     
-    def UpdateToday(self, CsvFileName):
+    def UpdateToday(self, ItemName,CsvFileName):
         startDate=""
         endDate=str(date.today())
-        
+        itemName=ItemName
         csvFileName=CsvFileName
         df=pd.read_csv(csvFileName, index_col="Date")
         
@@ -171,7 +171,7 @@ class DatasetGenerator:
 
         print(endDate)
         print(startDate)
-        self.RetivingDataPrices_Yahoo(startDate,endDate,csvFileName,csvFileName)
+        self.RetivingDataPrices_Yahoo(itemName,startDate,endDate,csvFileName,csvFileName)
         #df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',utc=True,threads = True)
     
     
