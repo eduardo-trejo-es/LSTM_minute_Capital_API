@@ -140,7 +140,7 @@ class Model_Trainer:
     
     early_stop= EarlyStopping(monitor='val_loss',mode='min',verbose=1,patience=25)
     
-    model.fit(x=trainX,y=y_data, epochs=120, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
+    model.fit(x=trainX,y=y_data, epochs=35, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
     #history = model.fit(trainX,y=y_data, epochs=125, batch_size=15)
 
 

@@ -39,9 +39,6 @@ class Forcast_Data:
     Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
     #....... dates .....#
-    #Dates_To_Use_To_Forcast=Data_dates[Data_dates.shape[0]-40:]
-    print(len(Data_dates))
-    print(Data_dates.get_loc("2001-01-09"))
     Dates_To_Use_To_Forcast=Data_dates[Data_dates.get_loc(dateFromForcast)-(backDaysRef-1):Data_dates.get_loc(dateFromForcast)+1]
     
     #print(Dates_To_Use_To_Forcast)
@@ -148,13 +145,15 @@ class Forcast_Data:
     
     #Splitting data  real Y
     #print("The shape of Batch_Real_Y_NonScaled: " + str(Batch_Real_Y_NonScaled.shape))
-    Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][ColumToforcast]
-    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][ColumToforcast]
-    """Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][3]
-    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][3]""
-    Real_Y_Close=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][8]
-    Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-2][8]
-    Batch_Real_Y_NonScaled"""
+    try:
+      Real_Y_Close=df_forcasting[df.index.get_loc(dateFromForcast)+1:df.index.get_loc(dateFromForcast)+2]
+      Real_Y_Close=Real_Y_Close["Close"][0]
+    except:
+      Real_Y_Close=df_forcasting[df.index.get_loc(dateFromForcast):df.index.get_loc(dateFromForcast)+1]
+      Real_Y_Close=Real_Y_Close["Close"][0]
+    Real_Y_current=df_forcasting[df.index.get_loc(dateFromForcast):df.index.get_loc(dateFromForcast)+1]
+    Real_Y_current=Real_Y_current["Close"][0]
+    #Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][ColumToforcast]
 
     Forcast_Close=Forcast_Close[0][0]
     Forcast_Close=Forcast_Close[0]

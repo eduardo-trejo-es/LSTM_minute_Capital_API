@@ -22,7 +22,7 @@ n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the
 n_past =120
 #Columns_N=86
 #Columns_N=43
-Columns_N=6
+Columns_N=7
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
@@ -31,7 +31,7 @@ LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_seq
 
 Dropout_layer2=keras.layers.Dropout(0.6)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(90, return_sequences=False)(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(300, return_sequences=False)(Dropout_layer2)
 
 Dropout_layer3=keras.layers.Dropout(0.6)(LSTM_Layer2)# modify
 
@@ -76,4 +76,4 @@ print(model.summary())
 
 #tf.keras.utils.plot_model(model, "FFT_added_LSTM/ModelGen/Model/Model_LSTM_31_FFT.png", show_shapes=True)
 
-model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_CloseDayMonthYearFFT_only1800FFT",save_format="h5")
+model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayanlyFFTCloseValum1800FFT",save_format="h5")
