@@ -3,81 +3,36 @@ from Retriver_and_Processor_Dataset import *
 dataSet_Gen= DatasetGenerator()
 
 
-item_to_use=0
-inversed=0
+
 dateStart='2001-01-01'
-dateEnd= '2023-02-28'
-
-if item_to_use==0 :
-    #######______________ CRUDE_Oil 'CL=F' _____________  ################
-    itemName='CL=F'
-    if inversed:
-        Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/Inversed_direcPrice/CRUDE_OIL_Data.csv"
-        #PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_PRCNTG.csv"
-        DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/Inversed_direcPrice/CRUDE_OIL_Data_DirePrice.csv"
-        DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/Inversed_direcPrice/CRUDE_OIL_Dataand_DayNum.csv"
-        MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/Inversed_direcPrice/CRUDE_OIL_Data_And_month.csv"
-        yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/Inversed_direcPrice/CRUDE_OIL_Data_And_year.csv"
-        FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/Inversed_direcPrice/CRUDE_OIL_Dataand_FFT_10_50_100.csv"
-    else:
-        Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
-        Onlyonecolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_onlyClose.csv"
-        #Towcolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_TwoOpenClose.csv"
-        #PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_PRCNTG.csv"
-        DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_DirePrice.csv"
-        DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
-        MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv"
-        yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv"
-        FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_1800.csv"
-elif item_to_use==1:
-    #######______________ Copper 'GH_F' _____________  ################
-    itemName='HG=F'
-    if inversed:
-        
-        Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Inversed_direcPrice/Copper_Data.csv"
-        #PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_PRCNTG.csv"
-        DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Inversed_direcPrice/Copper_Data_DirePrice.csv"
-        DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Inversed_direcPrice/Copper_Dataand_DayNum.csv"
-        MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Inversed_direcPrice/Copper_Data_And_month.csv"
-        yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Inversed_direcPrice/Copper_Data_And_year.csv"
-        FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Inversed_direcPrice/Copper_Dataand_FFT_10_50_100.csv"
-    else:
-        Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data.csv"
-        #PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_PRCNTG.csv"
-        DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_DirePrice.csv"
-        DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_DayNum.csv"
-        MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_And_month.csv"
-        yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Data_And_year.csv"
-        FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Copper_GH_F/Copper_Dataand_FFT_10_50_100.csv"
-else:
-    #######______________ Steel  'X' _____________  ################
-    itemName='X'
-    if inversed:
-        Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Inversed_direcPrice/Steel_Data.csv"
-        #PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_PRCNTG.csv"
-        DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Inversed_direcPrice/Steel_Data_DirePrice.csv"
-        DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Inversed_direcPrice/Steel_Dataand_DayNum.csv"
-        MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Inversed_direcPrice/Steel_Data_And_month.csv"
-        yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Inversed_direcPrice/Steel_Data_And_year.csv"
-        FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Inversed_direcPrice/Steel_Dataand_FFT_10_50_100.csv"
-    else:
-        Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data.csv"
-        #PRCNTGAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_PRCNTG.csv"
-        DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_DirePrice.csv"
-        DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_DayNum.csv"
-        MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_And_month.csv"
-        yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Data_And_year.csv"
-        FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/Steel_X/Steel_Dataand_FFT_10_50_100.csv"
+dateEnd= '2023-03-02'
 
 
-dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
-#dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
+#######______________ CRUDE_Oil 'CL=F' _____________  ################
+itemName='CL=F'
+
+Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
+Onlyonecolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_onlyClose.csv"
+LastOnetwice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_LastOneTwice.csv"
+DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_DirePrice.csv"
+DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
+MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv"
+yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv"
+FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_1800.csv"
+
+
+
+
+#dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
+dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
 #columns to pop up
+dataSet_Gen.AddRepeatedLastOne(Original_Path_Retiving, LastOnetwice)
+
 columns=['Open','High','Low','Volume']
 #columns=['Open','High','Low']
 #columns=['Volume']
 
-dataSet_Gen.PopListdf(columns,Original_Path_Retiving,Onlyonecolumn)
+dataSet_Gen.PopListdf(columns,LastOnetwice,Onlyonecolumn)
 #dataSet_Gen.AddColumnPRCNTG(Original_Path_Retiving,PRCNTGAddedPath)
 #if inversed:
 #    dataSet_Gen.AddColumnInverseDirePrice(Original_Path_Retiving,DirectionPrice)

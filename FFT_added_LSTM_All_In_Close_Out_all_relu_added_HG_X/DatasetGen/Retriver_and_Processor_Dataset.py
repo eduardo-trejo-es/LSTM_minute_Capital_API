@@ -1,6 +1,6 @@
 import pandas as pd
 import yfinance as yf
-from datetime import date
+from datetime import date, timedelta
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -100,6 +100,22 @@ class DatasetGenerator:
             year_Number.append(int(d_name.year))
             
         df["Year"]=year_Number
+            
+        self.SavingDataset(df,csvFileName, csvFileName_New,False)
+        
+    def AddRepeatedLastOne(self,csvFileName, csvFileName_New):
+        df=pd.read_csv(csvFileName, index_col="Date")
+
+        lastIndexRow=df.index[(df.shape[0]-1)]    
+        LastRow=df.loc[lastIndexRow]
+        print(lastIndexRow)
+        time_stamp = pd.Timestamp(lastIndexRow)
+        time_stamp=time_stamp+ timedelta(days=1) 
+        #time_stamp_str=str(time_stamp)[0:10]
+        
+
+        df.loc[time_stamp]=LastRow
+        
             
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
         

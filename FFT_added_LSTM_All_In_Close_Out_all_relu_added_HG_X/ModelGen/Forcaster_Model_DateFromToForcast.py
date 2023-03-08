@@ -116,12 +116,12 @@ class Forcast_Data:
       AllPrediction_DS_scaled_Back.append(scaler_Close.inverse_transform(i))
     
     
-    Forcast_Close= []
+    Forcast_Close=0
     
     #Splitting data with scaling back
     for i in range(N_Days_to_predict):
       y_pred_future = AllPrediction_DS_scaled_Back[i]
-      Forcast_Close.append(y_pred_future)
+      Forcast_Close=y_pred_future[0][0]
       
     #######    Generating forcasted dates    #######
 
@@ -155,9 +155,9 @@ class Forcast_Data:
     Real_Y_current=Real_Y_current["Close"][0]
     #Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][ColumToforcast]
 
-    Forcast_Close=Forcast_Close[0][0]
-    Forcast_Close=Forcast_Close[0]
-    
+    #Forcast_Close=Forcast_Close[0][0]
+    #Forcast_Close=Forcast_Close
+    print(type(Forcast_Close))
     #print(Forcast_Close)
     #print(Real_Y_Close)
     

@@ -19,8 +19,9 @@ else:
     #Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/ModelSigmoid_Tanh/Model_LSTM_FFT_43_sigmoid_RightSence"
     #Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_FFT_10_50_100.csv"
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_1800.csv"
+    all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
     percentageData=95
-    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Forcasts/Focast_CloseDayMonthYearvolumFFT180027_02_2023.csv"
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Forcasts/Focast_CloseDayMonthYearvolumFFT180003_03_2023.csv"
 
 trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Model_Path,Data_CSV)
@@ -33,9 +34,15 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
+saveAllandforcast=pd.DataFrame({})
+fd_ColumnForcast_Close_Day=pd.DataFrame({})
+all_df=pd.read_csv(all_colums_Data_CSV,index_col=0)
+
 
 df=pd.read_csv(Data_CSV,index_col=0)
 
+
+backdaysConsidered=10
 locpercentage=0
 ColumnCurrent_Close_Day=[]
 Real_Y_current=0
@@ -44,6 +51,8 @@ Real_Y_Forcast=0
 ColumnReal_Close_Day=[]
 Real_Y_Close=0
 Forcast_Dates=[]
+Forcast_Dates_toshow=[]
+
 ensambly=[]
 
 indexDates=df.index
@@ -51,28 +60,39 @@ indexDates=df.index
 locpercentage=int((indexDates.shape[0]*percentageData)/100)
 
 #datefiltredPercentage=indexDates[locpercentage:]
-datefiltredPercentage=indexDates[indexDates.shape[0]-200:]
+datefiltredPercentage=indexDates[indexDates.shape[0]-backdaysConsidered:]
 for i in datefiltredPercentage:
-    print(i)
     Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,str(i))
-    ColumnCurrent_Close_Day.append([Real_Y_current])
-    ColumnForcast_Close_Day.append([Real_Y_Forcast])
-    ColumnReal_Close_Day.append([Real_Y_Close])
+    ColumnCurrent_Close_Day.append(Real_Y_current)
+    ColumnForcast_Close_Day.append(Real_Y_Forcast)
+    ColumnReal_Close_Day.append(Real_Y_Close)
     Forcast_Dates.append(str(i))
     
-    
-    
     #if i == datefiltredPercentage[len(datefiltredPercentage)-2]: break
-
+Forcast_Dates_toshow=Forcast_Dates
 
 print(ColumnForcast_Close_Day)
 print("---------------------------------------------------")
 print(ColumnReal_Close_Day)
-ensambly_fin=pd.DataFrame({'Current':ColumnCurrent_Close_Day,'Forcast':ColumnForcast_Close_Day,'Real':ColumnReal_Close_Day})
-ensambly_fin['Dates']=Forcast_Dates
 
-plt.plot(ColumnForcast_Close_Day,label='ColumnForcast_Close_Day')
-plt.plot(ColumnReal_Close_Day,label='ColumnReal_Close_Day')
+
+### Below df only has close forcast data and dates forcast data
+fd_ColumnForcast_Close_Day=pd.DataFrame({'Forcast':ColumnForcast_Close_Day})
+#fd_ColumnForcast_Close_Day=pd.DataFrame({'Forcast':ColumnForcast_Close_Day,'ForcastDateTShow':Forcast_Dates_toshow})
+fd_ColumnForcast_Close_Day['Dates']=Forcast_Dates
+fd_ColumnForcast_Close_Day=fd_ColumnForcast_Close_Day.set_index('Dates')
+
+### Below df has all origianl colums and dates
+Allandforcast=all_df[all_df.shape[0]-backdaysConsidered:]
+
+frames = [Allandforcast, fd_ColumnForcast_Close_Day]
+
+Final_Allandforcast = pd.concat(frames,axis=1)
+print(Final_Allandforcast)
+
+
+plt.plot(ColumnForcast_Close_Day,label='ColumnForcast_Close_Day',color='orange', marker='o')
+plt.plot(ColumnReal_Close_Day,label='ColumnReal_Close_Day',color='green', marker='*')
     #plt.plot([1,2,3,4])
 plt.show()
 #np.insert(a, a.shape[1], np.array((10, 10, 10, 10)), 1)
@@ -80,4 +100,4 @@ plt.show()
 #print(ensambly_np.shape)
     # to convert to CSV
 
-ensambly_fin.to_csv(path_or_buf=forcastPath,index=False)
+Final_Allandforcast.to_csv(path_or_buf=forcastPath,index=True)
