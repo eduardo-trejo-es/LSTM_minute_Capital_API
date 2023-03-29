@@ -120,7 +120,7 @@ class DatasetGenerator:
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
         
         
-    def Add_ColumsFourier_Transform(self,periodic_Components_num,column_to_use, Origin_File_Path,Destiny_File_Path):
+    def Add_ColumsFourier_Transform(self,periodic_Components_num,column_to_use, Origin_File_Path,Destiny_File_Path,FileGenerated):
         csvFileName=Origin_File_Path
         
         df=pd.read_csv(csvFileName, index_col="Date")
@@ -172,6 +172,48 @@ class DatasetGenerator:
         #print("this is the last df"+str(df.head))   
         
         self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
+        
+    def Add_ColumsFourier_Transform_Df_Return(self,periodic_Components_num,column_to_use, DataSet):
+        df=DataSet
+     
+        Colum_Used=column_to_use
+        #print("using colum"+str(Colum_Used))
+        data_FT = df[Colum_Used]
+        #print("This is the head"+str(data_FT.head))
+        
+        dateIndex=[]
+        for i in data_FT.index:
+            dateIndex.append(i)
+        array_like=[]
+            
+        
+        array_like=np.asarray(data_FT).tolist()
+        The_fft = np.fft.fft(array_like)
+        fft_df =pd.DataFrame({'fft':The_fft})
+        fft_df['absolute']=fft_df['fft'].apply(lambda x: np.abs(x))
+        fft_df['angle']=fft_df['fft'].apply(lambda x: np.angle(x))
+        fft_list = np.asarray(fft_df['fft'].tolist())
+        
+        
+        Periodic_Components_Num=periodic_Components_num
+
+        fft_list_m10= np.copy(fft_list); 
+        fft_list_m10[Periodic_Components_Num:-Periodic_Components_Num]=0
+        data_fourier=np.fft.ifft(fft_list_m10)
+        
+        
+        Magnitud=[]
+        Angle=[]
+        for i in data_fourier:
+            magnitud, angle=cmath.polar(i)
+            Magnitud.append(magnitud)
+            Angle.append(angle)
+        
+        df["FFT_Mag_{}_{}".format(Colum_Used,periodic_Components_num)]=Magnitud
+        df["FFT_Angl_{}_{}".format(Colum_Used,periodic_Components_num)]=Angle
+        
+        #print("this is the last df"+str(df.head))     
+        return df
     
     def UpdateToday(self, ItemName,CsvFileName):
         startDate=""
@@ -361,3 +403,29 @@ class DatasetGenerator:
         df_percentage=df.set_index('Date')
                     
         self.SavingDataset(df_percentage,csvFileName, csvFileName_New,False)
+    
+    
+       
+    def  getTheLastFFTValue(self,BackdaysToconsider,Frec,Colum,CsvFileName, NewFilepath):
+
+        colum=Colum
+        csvFileName=CsvFileName
+        newFilepath=NewFilepath
+        backdaysToconsider=BackdaysToconsider
+        NewLastFFTDataset = pd.DataFrame({})
+        FinalLastFFTDataset = pd.DataFrame({})
+        frec=Frec
+        
+        df=pd.read_csv(csvFileName, index_col="Date")
+        
+        for i in range(backdaysToconsider,df.shape[0]+1):
+            df_short=df[:i]
+            NewLastFFTDataset=self.Add_ColumsFourier_Transform_Df_Return(frec,colum, df_short)
+            
+            NewLastFFTDataset=NewLastFFTDataset.iloc[-1:]
+            print(NewLastFFTDataset)
+            FinalLastFFTDataset=pd.concat([FinalLastFFTDataset,NewLastFFTDataset])  
+        
+        print(FinalLastFFTDataset.tail)
+        
+        self.SavingDataset(FinalLastFFTDataset,NewFilepath, NewFilepath, False)

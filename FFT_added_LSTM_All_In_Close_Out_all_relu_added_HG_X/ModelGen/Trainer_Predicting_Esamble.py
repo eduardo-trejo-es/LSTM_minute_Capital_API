@@ -69,7 +69,7 @@ class Model_Trainer:
     
 
     n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-    n_past =120
+    n_past =20
 
 
     # Creatig the data batches, each one with 30d days
