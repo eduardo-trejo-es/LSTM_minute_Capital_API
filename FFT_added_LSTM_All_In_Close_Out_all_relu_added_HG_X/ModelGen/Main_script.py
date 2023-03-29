@@ -26,7 +26,7 @@ else:
 trainer_model = Model_Trainer()
 forcaster = Forcast_Data(Model_Path,Data_CSV)
 
-training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
+#training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
 """
 Real_Y_current,Real_Y_Forcast,Real_Y_Close=forcaster.ToForcast(1,"2023-02-27")
 print(Real_Y_current)
@@ -34,7 +34,7 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
-"""
+
 saveAllandforcast=pd.DataFrame({})
 fd_ColumnForcast_Close_Day=pd.DataFrame({})
 all_df=pd.read_csv(all_colums_Data_CSV,index_col=0)
@@ -102,4 +102,3 @@ plt.show()
     # to convert to CSV
 
 Final_Allandforcast.to_csv(path_or_buf=forcastPath,index=True)
-"""
