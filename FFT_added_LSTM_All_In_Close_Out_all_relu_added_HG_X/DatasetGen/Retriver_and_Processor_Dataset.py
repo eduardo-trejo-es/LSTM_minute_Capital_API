@@ -69,23 +69,27 @@ class DatasetGenerator:
             
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
     
-    def AddColumnMoth(self,csvFileName, csvFileName_New,MothName_Too):
+    def AddColumnMothandDay(self,csvFileName, csvFileName_New,MothName_Too):
         df=pd.read_csv(csvFileName, index_col="Date")
         
         dateIndex=[]
         month_Name=[]
         Moth_Number=[]
+        Day_of_Moth=[]
         for i in df.index:
             dateIndex.append(i)
             d_name = pd.Timestamp(i)
             month_Name.append(str(d_name.month_name()))
             Moth_Number.append(int(d_name.month)*100)
+            Day_of_Moth.append(int(d_name.day))
             
         if MothName_Too:
             df["MonthName"]=month_Name
             df["Moth_Number"]=Moth_Number
+            df["DayMonth"]=Day_of_Moth
         else:
             df["Month_Number"]=Moth_Number
+            df["DayMonth"]=Day_of_Moth
             
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
     
