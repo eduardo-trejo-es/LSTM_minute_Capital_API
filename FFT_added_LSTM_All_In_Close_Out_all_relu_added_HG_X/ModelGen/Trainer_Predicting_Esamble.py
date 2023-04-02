@@ -69,7 +69,7 @@ class Model_Trainer:
     
 
     n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-    n_past =120
+    n_past =20
 
 
     # Creatig the data batches, each one with 30d days
@@ -140,7 +140,7 @@ class Model_Trainer:
     
     early_stop= EarlyStopping(monitor='val_loss',mode='min',verbose=1,patience=25)
     
-    model.fit(x=trainX,y=y_data, epochs=35, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
+    model.fit(x=trainX,y=y_data, epochs=30, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
     #history = model.fit(trainX,y=y_data, epochs=125, batch_size=15)
 
 

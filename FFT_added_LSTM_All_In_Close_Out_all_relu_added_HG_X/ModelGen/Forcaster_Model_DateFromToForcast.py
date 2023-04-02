@@ -33,7 +33,7 @@ class Forcast_Data:
     N_units_to_predict=n_units_to_predict
     #Model_Path=model_Path
     df=pd.read_csv(self.csvFileName,index_col=0)
-    backDaysRef=120
+    backDaysRef=20
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
