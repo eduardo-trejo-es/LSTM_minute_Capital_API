@@ -24,11 +24,10 @@ from tensorflow.python.keras.layers.core import Activation
 
 # import sys module
 import sys
-# tell interpreter where to look
-#sys.path.append("../DatasetGen")
+sys.path.append("/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/DataSetgenPacks")
 
 # import all classes
-from FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X.DatasetGen.Retriver_and_Processor_Dataset import *
+from Retriver_and_Processor_Dataset import DatasetGenerator
 
 class Forcast_Data:
   def __init__(self,Model_Path,data_frame_Path):
@@ -40,7 +39,7 @@ class Forcast_Data:
     self.Real_Y_Close=""
     self.Forcasted_Date=""
     
-    self.dataSet_Gen= DatasetGenerator()
+    self.dataSet_Gen = DatasetGenerator()
     
   def ToForcastfrom(self,dateFromForcast):
   ########     Getting the Data     ######
@@ -177,9 +176,8 @@ class Forcast_Data:
   def Get_Forcasted_Date(self):
     return self.Forcasted_Date
   
-  
   def RecurrentForcasting(self,n,date_from,BaseDataSet,NewForcast):
-    self.ToForcastfrom(n,date_from)
+    self.ToForcastfrom(date_from)
     print(self.Get_UnicForcast_Real_Y_current())
     print(self.Get_UnicForcast_Forcast_Close())
     print(self.Get_UnicForcast_Real_Y_Close())

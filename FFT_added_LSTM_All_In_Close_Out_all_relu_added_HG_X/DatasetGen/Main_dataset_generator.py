@@ -1,8 +1,10 @@
-from Retriver_and_Processor_Dataset import *
+import sys
+sys.path.append("/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/DataSetgenPacks")
 
-dataSet_Gen= DatasetGenerator()
+# import all classes
+from Retriver_and_Processor_Dataset import DatasetGenerator
 
-
+dataSet_Gen = DatasetGenerator()
 
 dateStart='2001-01-01'
 dateEnd= '2023-03-02'
