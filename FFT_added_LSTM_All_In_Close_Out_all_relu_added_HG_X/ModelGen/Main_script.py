@@ -27,19 +27,16 @@ else:
     forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Forcasts/Focast_CloseDayMonth20backdayslastFFT10030_03_2023.csv"
 
 trainer_model = Model_Trainer()
-forcaster =Forcast_Data(Model_Path,Data_CSV)
-forcaster2 =Forcast_Data(Model_Path,Data_CSV)
+forcaster =Forcast_Data(Model_Path)
+
 
 #training_result=trainer_model.to_train(Model_Path,Data_CSV,percentageData)
 #forcaster.ToForcastfrom("2023-03-24 00:00:00")
 date_from="2023-03-24 00:00:00"
 date_from2="2023-03-23 00:00:00"
-BaseDataSet=""
-NewForcast=""
+NewDataSetForcasts=""
 
 #This method returns the the last prediction made of the n asked forcasted.
 #Also during process a new csv data file is generated, it contains the whole real data + the appended n forcasted data
-forcaster.RecurrentForcasting(1,date_from,BaseDataSet,NewForcast)
-print("---------------------------------------")
+forcaster.RecurrentForcasting(3,date_from,Data_CSV,NewDataSetForcasts)
 
-forcaster2.RecurrentForcasting(1,date_from2,BaseDataSet,NewForcast)

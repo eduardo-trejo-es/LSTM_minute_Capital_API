@@ -433,3 +433,9 @@ class DatasetGenerator:
         print(FinalLastFFTDataset.tail)
         
         self.SavingDataset(FinalLastFFTDataset,NewFilepath, NewFilepath, False)
+    
+    def addintToExisting(self,OriginalFilePath,NewFilePath,index,columnsVal):
+        #If  doesn't exist create one
+        
+        #If already exist, then to add
+        pass

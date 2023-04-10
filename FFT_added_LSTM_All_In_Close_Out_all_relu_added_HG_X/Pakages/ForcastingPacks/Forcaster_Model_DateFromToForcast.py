@@ -30,8 +30,7 @@ sys.path.append("/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_A
 from Retriver_and_Processor_Dataset import DatasetGenerator
 
 class Forcast_Data:
-  def __init__(self,Model_Path,data_frame_Path):
-    self.csvFileName=data_frame_Path
+  def __init__(self,Model_Path):
     self.model = keras.models.load_model(Model_Path)
     
     self.Real_Y_current=""
@@ -41,10 +40,11 @@ class Forcast_Data:
     
     self.dataSet_Gen = DatasetGenerator()
     
-  def ToForcastfrom(self,dateFromForcast):
+  def ToForcastfrom(self,dateFromForcast,data_frame_Path):
+    csvFileName=data_frame_Path
   ########     Getting the Data     ######
     #Model_Path=model_Path
-    df=pd.read_csv(self.csvFileName,index_col=0)
+    df=pd.read_csv(csvFileName,index_col=0)
     backDaysRef=20
     #Separate dates for future plotting
     Data_dates = df.index
@@ -177,11 +177,22 @@ class Forcast_Data:
     return self.Forcasted_Date
   
   def RecurrentForcasting(self,n,date_from,BaseDataSet,NewForcast):
-    self.ToForcastfrom(date_from)
-    print(self.Get_UnicForcast_Real_Y_current())
-    print(self.Get_UnicForcast_Forcast_Close())
-    print(self.Get_UnicForcast_Real_Y_Close())
-    print(self.Get_Forcasted_Date())
+    #at the firt scan loop I use the base data set then the next I use the
+    firstcicle=True
+    
+    self.dataSet_Gen.addintToExisting(OriginalFilePath,NewFilePath)
+    
+    for i in range(0,n):
+      CurrentCloseForcast=self.Get_UnicForcast_Forcast_Close()
+      CurrentCloseDateForcast=self.Get_Forcasted_Date()
+      
+      if firstcicle == True:
+        self.ToForcastfrom(date_from,BaseDataSet)
+        firstcicle=False
+      else:
+        print(".............................................")
+        self.ToForcastfrom(date_from,BaseDataSet)
+      
   
 
   
