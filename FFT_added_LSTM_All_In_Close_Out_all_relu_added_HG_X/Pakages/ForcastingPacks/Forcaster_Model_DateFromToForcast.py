@@ -176,22 +176,37 @@ class Forcast_Data:
   def Get_Forcasted_Date(self):
     return self.Forcasted_Date
   
-  def RecurrentForcasting(self,n,date_from,BaseDataSet,NewForcast):
+  def RecurrentForcasting(self,n,date_from,OriginalFilePath,NewFilePath):
     #at the firt scan loop I use the base data set then the next I use the
     firstcicle=True
     
-    self.dataSet_Gen.addintToExisting(OriginalFilePath,NewFilePath)
+    d={}
+    indx=[]
+    df=pd.DataFrame(data=d,index=indx)
     
     for i in range(0,n):
-      CurrentCloseForcast=self.Get_UnicForcast_Forcast_Close()
-      CurrentCloseDateForcast=self.Get_Forcasted_Date()
+      CurrentCloseForcast.append[self.Get_UnicForcast_Forcast_Close()]
+      CurrentCloseDateForcast=[self.Get_Forcasted_Date()]
       
       if firstcicle == True:
-        self.ToForcastfrom(date_from,BaseDataSet)
+        self.ToForcastfrom(date_from,OriginalFilePath)
         firstcicle=False
+        
+        Date,Close
+        df["Close"]=CurrentCloseForcast
+        df['Date']=indexDatesList
+        df_percentage=df.set_index('Date')
+        
+        
+        self.dataSet_Gen.SavingDataset(df,OriginalFilePath, NewFilePath,True)
       else:
         print(".............................................")
-        self.ToForcastfrom(date_from,BaseDataSet)
+        self.ToForcastfrom(CurrentCloseDateForcast,NewFilePath)
+        self.dataSet_Gen.SavingDataset(df,OriginalFilePath, NewFilePath,True)
+        
+      
+      
+    
       
   
 
