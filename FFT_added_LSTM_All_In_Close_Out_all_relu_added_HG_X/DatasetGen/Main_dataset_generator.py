@@ -20,12 +20,12 @@ DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/C
 DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
 MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv"
 yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv"
-FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_100.csv"
+FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_150_51Backdys.csv"
 
 
-"""
+
 #dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
-dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
+"""dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
 #columns to pop up
 #dataSet_Gen.AddRepeatedLastOne(Original_Path_Retiving, LastOnetwice)
 
@@ -46,20 +46,21 @@ dataSet_Gen.AddColumnWeekDay(Onlyonecolumn, DayNumAddedPath,False)
 
 dataSet_Gen.AddColumnMothandDay(DayNumAddedPath, MonthAddedPath,False)
 
-dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
+dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)"""
 #
 #Generate new FFT columns done :)
 
-"""
+
 
 #Column=['Open_CL=F','High_CL=F','Low_CL=F','Close_CL=F','Volume_CL=F','Open_HG=F','High_HG=F','Low_HG=F','Close_HG=F','Volume_HG=F','Open_X','High_X','Low_X','Close_X','Volume_X']
 #Column=['Open','High','Low','Close']
 Column='Close'
-frec=[100]
+frec=[150]
 #frec=[10,50,100 
 inicialPath=yearAddedPath
 FFTNew_FileData=FFTAddedPath
-backdaysToconsider=21
+###### importante cambiar dependiendo del modelo y los backdays que considera    ##########
+backdaysToconsider=51
 firstDone=False
 for i in frec:
     if firstDone==True:

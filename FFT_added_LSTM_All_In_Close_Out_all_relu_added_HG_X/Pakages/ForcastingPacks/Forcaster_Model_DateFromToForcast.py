@@ -45,7 +45,7 @@ class Forcast_Data:
   ########     Getting the Data     ######
     #Model_Path=model_Path
     df=pd.read_csv(csvFileName,index_col=0)
-    backDaysRef=20
+    backDaysRef=50
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
@@ -176,33 +176,78 @@ class Forcast_Data:
   def Get_Forcasted_Date(self):
     return self.Forcasted_Date
   
-  def RecurrentForcasting(self,n,date_from,OriginalFilePath,NewFilePath):
+  def RecurrentForcasting(self,n,date_from,OriginalSimpleDataSet2ColumnsPath,FFTOriginalFilePath,SimpleDataSet2ColumnsPath):
     #at the firt scan loop I use the base data set then the next I use the
     firstcicle=True
     
     d={}
     indx=[]
     df=pd.DataFrame(data=d,index=indx)
+    CurrentCloseForcast=[]
+    CurrentCloseDateForcast=[]
+    
+    #Filepath To generate the dataset files
+    Original_Path_Retiving=SimpleDataSet2ColumnsPath
+    Onlyonecolumn="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_Data_onlyClose.csv"
+    DayNumAddedPath="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_Dataand_DayNum.csv"
+    MonthAddedPath="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_Data_And_month.csv"
+    yearAddedPath="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_Data_And_year.csv"
+    FFTAddedPath="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_CloseFFT_100.csv"
+    
     
     for i in range(0,n):
-      CurrentCloseForcast.append[self.Get_UnicForcast_Forcast_Close()]
-      CurrentCloseDateForcast=[self.Get_Forcasted_Date()]
-      
       if firstcicle == True:
-        self.ToForcastfrom(date_from,OriginalFilePath)
+        self.ToForcastfrom(date_from,FFTOriginalFilePath)
         firstcicle=False
         
-        Date,Close
-        df["Close"]=CurrentCloseForcast
-        df['Date']=indexDatesList
-        df_percentage=df.set_index('Date')
         
-        
-        self.dataSet_Gen.SavingDataset(df,OriginalFilePath, NewFilePath,True)
       else:
         print(".............................................")
-        self.ToForcastfrom(CurrentCloseDateForcast,NewFilePath)
-        self.dataSet_Gen.SavingDataset(df,OriginalFilePath, NewFilePath,True)
+        
+        #To the new Dataset File Path must be added the day 
+        #The used to predict is not the same  that is saved
+        
+        columns=['Open','High','Low','Volume']
+        self.dataSet_Gen.PopListdf(columns,Original_Path_Retiving,Onlyonecolumn)
+        
+        self.dataSet_Gen.AddColumnWeekDay(Onlyonecolumn, DayNumAddedPath,False)
+
+        self.dataSet_Gen.AddColumnMothandDay(DayNumAddedPath, MonthAddedPath,False)
+
+        self.dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
+        
+        Column='Close'
+        frec=[100]
+        #frec=[10,50,100 
+        inicialPath=yearAddedPath
+        FFTNew_FileData=FFTAddedPath
+        backdaysToconsider=21
+        firstDone=False
+        for i in frec:
+            if firstDone==True:
+                inicialPath=FFTAddedPath
+                FFTNew_FileData=FFTAddedPath 
+            self.dataSet_Gen.getTheLastFFTValue(backdaysToconsider,i,Column,inicialPath, FFTNew_FileData)
+            firstDone=True
+        
+        
+        self.ToForcastfrom(CurrentCloseDateForcast,FFTNew_FileData)
+        
+      
+      CurrentCloseForcast.append(self.Get_UnicForcast_Forcast_Close())
+      CurrentCloseDateForcast.append(self.Get_Forcasted_Date())
+        
+      df["Close"]=CurrentCloseForcast
+      df["Date"]=CurrentCloseDateForcast
+      df_defin=df.set_index('Date')
+        
+      self.dataSet_Gen.SavingDataset(df_defin,OriginalSimpleDataSet2ColumnsPath, Original_Path_Retiving,True)
+      
+      
+      
+      
+      
+      
         
       
       
