@@ -40,18 +40,19 @@ class Forcast_Data:
     
     self.dataSet_Gen = DatasetGenerator()
     
-  def ToForcastfrom(self,dateFromForcast,data_frame_Path):
+  def ToForcastfrom(self,dateFromForcast,data_frame_Path,BackDays):
     csvFileName=data_frame_Path
   ########     Getting the Data     ######
     #Model_Path=model_Path
     df=pd.read_csv(csvFileName,index_col=0)
-    backDaysRef=50
+    backDaysRef=BackDays
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
     #....... dates .....#
     Dates_To_Use_To_Forcast=Data_dates[Data_dates.get_loc(dateFromForcast)-(backDaysRef-1):Data_dates.get_loc(dateFromForcast)+1]
+    print(Dates_To_Use_To_Forcast)
     
     #print(Dates_To_Use_To_Forcast)
     
@@ -71,6 +72,8 @@ class Forcast_Data:
     
     ####    Scaling only the close colum   ####
     print(dateFromForcast)
+    print("----------------------------------------------")
+    print("\n")
     df_forcasting_close=df_forcasting[cols[ColumToforcast]].to_numpy()
     #df_forcasting_close=df_forcasting[cols[3]].to_numpy()
     #df_forcasting_close=df_forcasting[cols[8]].to_numpy()

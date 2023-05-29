@@ -26,7 +26,7 @@ class Model_Trainer:
   def __init__(self):
     pass
   
-  def to_train(self,numEpochs, modelPath,DatasetPath,ThepercentageTrainingData):
+  def to_train(self,numEpochs, modelPath,DatasetPath,ThepercentageTrainingData,Np_pasdays):
     
     NumEpochs=numEpochs
     ########     Getting the Data      ######
@@ -70,7 +70,7 @@ class Model_Trainer:
     
 
     n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-    n_past =50
+    n_past =Np_pasdays
 
 
     # Creatig the data batches, each one with 30d days
@@ -139,7 +139,7 @@ class Model_Trainer:
 
     #------------------------- Training model --------------------------------
     
-    early_stop= EarlyStopping(monitor='val_loss',mode='min',verbose=1,patience=25)
+    early_stop= EarlyStopping(monitor='mean_squared_error',mode='min',verbose=1,patience=25)
     
     model.fit(x=trainX,y=y_data, epochs=NumEpochs, batch_size=15, validation_data=(testingX,testing_y_data),callbacks=[early_stop])
     #history = model.fit(trainX,y=y_data, epochs=125, batch_size=15)

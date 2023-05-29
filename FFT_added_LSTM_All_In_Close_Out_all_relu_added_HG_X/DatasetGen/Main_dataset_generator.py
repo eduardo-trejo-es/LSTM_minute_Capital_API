@@ -20,19 +20,16 @@ DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/C
 DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
 MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv"
 yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv"
-FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_150_51Backdys.csv"
+FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
 
 
 
 #dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
-"""dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
+dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
 #columns to pop up
 #dataSet_Gen.AddRepeatedLastOne(Original_Path_Retiving, LastOnetwice)
 
 columns=['Open','High','Low','Volume']
-#columns=['Open','High','Low']
-#columns=['Volume']
-
 dataSet_Gen.PopListdf(columns,Original_Path_Retiving,Onlyonecolumn)
 #dataSet_Gen.AddColumnPRCNTG(Original_Path_Retiving,PRCNTGAddedPath)
 #if inversed:
@@ -40,13 +37,11 @@ dataSet_Gen.PopListdf(columns,Original_Path_Retiving,Onlyonecolumn)
 #else: 
 #    dataSet_Gen.AddColumnDirePrice(Original_Path_Retiving,DirectionPrice)
 
-
-
 dataSet_Gen.AddColumnWeekDay(Onlyonecolumn, DayNumAddedPath,False)
 
 dataSet_Gen.AddColumnMothandDay(DayNumAddedPath, MonthAddedPath,False)
 
-dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)"""
+dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
 #
 #Generate new FFT columns done :)
 
@@ -60,7 +55,8 @@ frec=[150]
 inicialPath=yearAddedPath
 FFTNew_FileData=FFTAddedPath
 ###### importante cambiar dependiendo del modelo y los backdays que considera    ##########
-backdaysToconsider=51
+#### backdays must be +1 to consider the 10 days like 11 for 10 back days, or 51 for 50 backdays
+backdaysToconsider=6
 firstDone=False
 for i in frec:
     if firstDone==True:

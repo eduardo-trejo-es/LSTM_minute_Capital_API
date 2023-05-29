@@ -19,7 +19,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 #---------Layes are created
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-n_past =50
+n_past =5
 Columns_N=7
 
 inputs=keras.Input(shape=(n_past,Columns_N))
@@ -29,7 +29,7 @@ LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_seq
 
 Dropout_layer2=keras.layers.Dropout(0.6)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(300, return_sequences=False)(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(400, return_sequences=False)(Dropout_layer2)
 
 Dropout_layer3=keras.layers.Dropout(0.6)(LSTM_Layer2)# modify
 
@@ -60,7 +60,7 @@ model=keras.Model(inputs=inputs, outputs=outputArray, name='Prices_Forcasting_LS
 loss = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 
 #optim=keras.optimizers.Adam(1e-3)
-optim=keras.optimizers.Adam(1e-3)
+optim=keras.optimizers.Adam(1e-6)
 Metrics=["mean_squared_error"]
 
 losses={
@@ -74,4 +74,4 @@ print(model.summary())
 
 #tf.keras.utils.plot_model(model, "FFT_added_LSTM/ModelGen/Model/Model_LSTM_31_FFT.png", show_shapes=True)
 
-model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth50BackDlastFFTCloseValum150FFT300units",save_format="h5")
+model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-3",save_format="h5")
