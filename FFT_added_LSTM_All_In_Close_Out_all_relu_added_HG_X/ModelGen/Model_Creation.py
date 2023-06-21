@@ -14,13 +14,22 @@ from tensorflow.python.keras.layers.core import Activation
 
 
 
+
 keras.backend.clear_session()  # Reseteo sencillo
 
 #---------Layes are created
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
 n_past =5
-Columns_N=7
+OneColum=False
+
+
+if OneColum:
+    Columns_N=7
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
+else:
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
+    Columns_N=9
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
@@ -74,4 +83,4 @@ print(model.summary())
 
 #tf.keras.utils.plot_model(model, "FFT_added_LSTM/ModelGen/Model/Model_LSTM_31_FFT.png", show_shapes=True)
 
-model.save("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-3",save_format="h5")
+model.save(modelPath,save_format="h5")

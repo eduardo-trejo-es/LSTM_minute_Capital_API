@@ -26,7 +26,9 @@ class Model_Trainer:
   def __init__(self):
     pass
   
-  def to_train(self,numEpochs, modelPath,DatasetPath,ThepercentageTrainingData,Np_pasdays):
+  def to_train(self,OneColums,numEpochs, modelPath,DatasetPath,ThepercentageTrainingData,Np_pasdays):
+    
+    ColumToforcast=0
     
     NumEpochs=numEpochs
     ########     Getting the Data      ######
@@ -39,7 +41,11 @@ class Model_Trainer:
     Data_dates=Data_dates.tz_localize(None)
     
     Columns_N=df.shape[1]
-    ColumToforcast=0
+    if OneColums:
+      ColumToforcast=0
+    else:
+      ColumToforcast=2
+      
     print(Columns_N)
     #Getting the columns name
     cols = list(df)[0:Columns_N]

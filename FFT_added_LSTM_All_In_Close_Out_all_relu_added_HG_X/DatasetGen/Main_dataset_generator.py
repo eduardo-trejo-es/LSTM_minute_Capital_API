@@ -11,26 +11,44 @@ dateEnd= '2023-03-02'
 
 
 #######______________ CRUDE_Oil 'CL=F' _____________  ################
-itemName='CL=F'
+itemName = 'CL=F'
+OneColum=True
 
-Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
-Onlyonecolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_onlyClose.csv"
-LastOnetwice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_LastOneTwice.csv"
-DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_DirePrice.csv"
-DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Dataand_DayNum.csv"
-MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_month.csv"
-yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data_And_year.csv"
-FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
+if OneColum:
+    Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data.csv"
+    Onlyonecolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data_onlyClose.csv"
+    LastOnetwice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data_LastOneTwice.csv"
+    DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data_DirePrice.csv"
+    DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Dataand_DayNum.csv"
+    MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data_And_month.csv"
+    yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data_And_year.csv"
+    FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
+else:
+    Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
+    Onlyonecolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_onlyClose.csv"
+    LastOnetwice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_LastOneTwice.csv"
+    DirectionPrice="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_DirePrice.csv"
+    DayNumAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Dataand_DayNum.csv"
+    MonthAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_And_month.csv"
+    yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_And_year.csv"
+    FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
 
 
 
 #dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
 dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
+
 #columns to pop up
 #dataSet_Gen.AddRepeatedLastOne(Original_Path_Retiving, LastOnetwice)
+if OneColum:
+    #Columns to remove
+    columns=['Open','High','Low','Volume']
+else:
+    #Columns to remove
+    columns=['Open','Volume']
 
-columns=['Open','High','Low','Volume']
 dataSet_Gen.PopListdf(columns,Original_Path_Retiving,Onlyonecolumn)
+
 #dataSet_Gen.AddColumnPRCNTG(Original_Path_Retiving,PRCNTGAddedPath)
 #if inversed:
 #    dataSet_Gen.AddColumnInverseDirePrice(Original_Path_Retiving,DirectionPrice)

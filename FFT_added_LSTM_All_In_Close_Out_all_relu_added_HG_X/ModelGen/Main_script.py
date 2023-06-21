@@ -10,22 +10,30 @@ from matplotlib import pyplot as plt
 
 
 inverseModel=0
+OneColum=True
 
-#Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth20BackDlastFFTCloseValum100FFT"
-Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-3"
-Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
-SimpleDataSet2ColumnsPath="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
-all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/CRUDE_OIL_Data.csv"
-percentageData=100
-forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_20_05_2023.csv"
+if OneColum:
+    #Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth20BackDlastFFTCloseValum100FFT"
+    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
+    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
+    all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data.csv"
+    percentageData=100
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_20_05_2023.csv"
+else:
+    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
+    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
+    all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_20_05_2023.csv"
+    percentageData=100
+    
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
 
 #is this one the old working trainer version
-#training_result=trainer_model.to_train(100,Model_Path,Data_CSV,percentageData,5)
+#training_result=trainer_model.to_train(True,100,Model_Path,Data_CSV,percentageData,5)
 # this last one was 6 of 6
-
+#
 date_from="2023-03-24 00:00:00"
 date_from2="2023-03-23 00:00:00"
 NewDataSetForcasts="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_DataNewDataSetForcasted.csv"
@@ -75,7 +83,7 @@ locpercentage=int((indexDates.shape[0]*percentageData)/100)
 #datefiltredPercentage=indexDates[locpercentage:]
 datefiltredPercentage=indexDates[indexDates.shape[0]-backdaysConsideredToBForcasted:]
 for i in datefiltredPercentage:
-    forcaster.ToForcastfrom(str(i),Data_CSV,backdaysConsidered)
+    forcaster.ToForcastfrom(True,str(i),Data_CSV,backdaysConsidered)
     Real_Y_current=forcaster.Get_UnicForcast_Real_Y_current()
     Real_Y_Forcast=forcaster.Get_UnicForcast_Forcast_Close()
     Real_Y_Close=forcaster.Get_UnicForcast_Real_Y_Close()

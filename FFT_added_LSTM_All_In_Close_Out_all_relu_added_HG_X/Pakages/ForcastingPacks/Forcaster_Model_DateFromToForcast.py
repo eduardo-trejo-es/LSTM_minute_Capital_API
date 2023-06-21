@@ -40,7 +40,7 @@ class Forcast_Data:
     
     self.dataSet_Gen = DatasetGenerator()
     
-  def ToForcastfrom(self,dateFromForcast,data_frame_Path,BackDays):
+  def ToForcastfrom(self,OneColums,dateFromForcast,data_frame_Path,BackDays):
     csvFileName=data_frame_Path
   ########     Getting the Data     ######
     #Model_Path=model_Path
@@ -57,7 +57,10 @@ class Forcast_Data:
     #print(Dates_To_Use_To_Forcast)
     
     Columns_N=df.shape[1]
-    ColumToforcast=0
+    if OneColums:
+      ColumToforcast=0
+    else:
+      ColumToforcast=2
     #Getting the columns name
     cols = list(df)[0:Columns_N]
     #New dataframe with only training data - 5 columns
