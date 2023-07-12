@@ -18,7 +18,7 @@ if OneColum:
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data.csv"
     percentageData=100
-    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_20_05_2023.csv"
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_09_07_2023.csv"
 else:
     Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
@@ -50,7 +50,6 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
-
 
 saveAllandforcast=pd.DataFrame({})
 fd_ColumnForcast_Close_Day=pd.DataFrame({})

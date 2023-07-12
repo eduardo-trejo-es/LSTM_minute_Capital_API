@@ -21,7 +21,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
 n_past =5
-OneColum=False
+OneColum=True
 
 
 if OneColum:
