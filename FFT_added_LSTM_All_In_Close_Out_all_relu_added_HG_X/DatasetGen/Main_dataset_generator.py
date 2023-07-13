@@ -82,3 +82,20 @@ for i in frec:
         FFTNew_FileData=FFTAddedPath 
     dataSet_Gen.getTheLastFFTValue(backdaysToconsider,i,Column,inicialPath, FFTNew_FileData)
     firstDone=True
+    
+#to use:
+"""
+Column=['Open_CL=F','High_CL=F','Low_CL=F','Close_CL=F','Volume_CL=F','Open_HG=F','High_HG=F','Low_HG=F','Close_HG=F','Volume_HG=F','Open_X','High_X','Low_X','Close_X','Volume_X']
+Column=['Open','High','Low','Close','Volume']
+frec=[10,50,100]
+
+inicialPath=yearAddedPath
+FFTNew_FileData=FFTAddedPath
+for i in Column:
+    for j in frec:
+        if i == Column[0] and j == frec[0]:
+            dataSet_Gen.Add_ColumsFourier_Transform(j,i,inicialPath,FFTNew_FileData)
+        else:   
+            dataSet_Gen.Add_ColumsFourier_Transform(j,i,FFTNew_FileData,FFTNew_FileData)
+            
+"""
