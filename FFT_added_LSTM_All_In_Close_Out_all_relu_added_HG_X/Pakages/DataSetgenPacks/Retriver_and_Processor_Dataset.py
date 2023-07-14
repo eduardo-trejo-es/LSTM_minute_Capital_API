@@ -177,46 +177,51 @@ class DatasetGenerator:
         
         self.SavingDataset(df,Origin_File_Path, Destiny_File_Path, False)
         
-    def Add_ColumsFourier_Transform_Df_Return(self,periodic_Components_num,column_to_use, DataSet):
+    def Add_ColumsFourier_Transform_Df_Return(self,Periodic_Components_num,column_to_use, DataSet):
         df=DataSet
      
         Colum_Used=column_to_use
-        #print("using colum"+str(Colum_Used))
-        data_FT = df[Colum_Used]
-        #print("This is the head"+str(data_FT.head))
+        periodic_components_num=Periodic_Components_num
+        print("using colum"+str(Colum_Used))
         
-        dateIndex=[]
-        for i in data_FT.index:
-            dateIndex.append(i)
-        array_like=[]
-            
+        for e in Colum_Used :
+            for j in periodic_components_num :
         
-        array_like=np.asarray(data_FT).tolist()
-        The_fft = np.fft.fft(array_like)
-        fft_df =pd.DataFrame({'fft':The_fft})
-        fft_df['absolute']=fft_df['fft'].apply(lambda x: np.abs(x))
-        fft_df['angle']=fft_df['fft'].apply(lambda x: np.angle(x))
-        fft_list = np.asarray(fft_df['fft'].tolist())
-        
-        
-        Periodic_Components_Num=periodic_Components_num
+                data_FT = df[e]
+                #print("This is the head"+str(data_FT.head))
+                
+                dateIndex=[]
+                for i in data_FT.index:
+                    dateIndex.append(i)
+                array_like=[]
+                    
+                
+                array_like=np.asarray(data_FT).tolist()
+                The_fft = np.fft.fft(array_like)
+                fft_df =pd.DataFrame({'fft':The_fft})
+                fft_df['absolute']=fft_df['fft'].apply(lambda x: np.abs(x))
+                fft_df['angle']=fft_df['fft'].apply(lambda x: np.angle(x))
+                fft_list = np.asarray(fft_df['fft'].tolist())
+                
+                
+                
 
-        fft_list_m10= np.copy(fft_list); 
-        fft_list_m10[Periodic_Components_Num:-Periodic_Components_Num]=0
-        data_fourier=np.fft.ifft(fft_list_m10)
-        
-        
-        Magnitud=[]
-        Angle=[]
-        for i in data_fourier:
-            magnitud, angle=cmath.polar(i)
-            Magnitud.append(magnitud)
-            Angle.append(angle)
-        
-        df["FFT_Mag_{}_{}".format(Colum_Used,periodic_Components_num)]=Magnitud
-        df["FFT_Angl_{}_{}".format(Colum_Used,periodic_Components_num)]=Angle
-        
-        #print("this is the last df"+str(df.head))     
+                fft_list_m10= np.copy(fft_list); 
+                fft_list_m10[j:-j]=0
+                data_fourier=np.fft.ifft(fft_list_m10)
+                
+                
+                Magnitud=[]
+                Angle=[]
+                for i in data_fourier:
+                    magnitud, angle=cmath.polar(i)
+                    Magnitud.append(magnitud)
+                    Angle.append(angle)
+                
+                df["FFT_Mag_{}_{}".format(e,j)]=Magnitud
+                df["FFT_Angl_{}_{}".format(e,j)]=Angle
+                
+                #print("this is the last df"+str(df.head))     
         return df
     
     def UpdateToday(self, ItemName,CsvFileName):
@@ -411,25 +416,28 @@ class DatasetGenerator:
     
        
     def  getTheLastFFTValue(self,BackdaysToconsider,Frec,Colum,CsvFileName, NewFilepath):
-
-        colum=Colum
+        colum=Colum #Now is a list
         csvFileName=CsvFileName
         newFilepath=NewFilepath
         backdaysToconsider=BackdaysToconsider
         NewLastFFTDataset = pd.DataFrame({})
         FinalLastFFTDataset = pd.DataFrame({})
-        frec=Frec
+        frec=Frec # Now is a list
         
         df=pd.read_csv(csvFileName, index_col="Date")
+        #df.shape[0])  ---> is the row numbers like 5566 days
+        
         
         for i in range(backdaysToconsider,df.shape[0]+1):
-            df_short=df[:i]
+                    
+            df_short=df[:i] #starting from row 0 values up to backdays-1 and increase until df.shape[0] 
             NewLastFFTDataset=self.Add_ColumsFourier_Transform_Df_Return(frec,colum, df_short)
-            
-            NewLastFFTDataset=NewLastFFTDataset.iloc[-1:]
             print(NewLastFFTDataset)
+            NewLastFFTDataset=NewLastFFTDataset.iloc[-1:]#getting only the last one
+            print(NewLastFFTDataset)
+            
             FinalLastFFTDataset=pd.concat([FinalLastFFTDataset,NewLastFFTDataset])  
         
         print(FinalLastFFTDataset.tail)
         
-        self.SavingDataset(FinalLastFFTDataset,NewFilepath, NewFilepath, False)   
+        self.SavingDataset(FinalLastFFTDataset,newFilepath, newFilepath, False)   
