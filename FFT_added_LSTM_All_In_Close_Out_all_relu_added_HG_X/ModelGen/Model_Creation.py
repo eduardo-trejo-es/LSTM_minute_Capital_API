@@ -21,14 +21,14 @@ keras.backend.clear_session()  # Reseteo sencillo
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
 n_past =5
-OneColum=True
+OneColum=False
 
 
 if OneColum:
     Columns_N=7
-    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6"
 else:
-    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast11columnsFFTCloseHighLow500FFT600units1e-6"
     Columns_N=9
 
 inputs=keras.Input(shape=(n_past,Columns_N))
@@ -38,7 +38,7 @@ LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_seq
 
 Dropout_layer2=keras.layers.Dropout(0.6)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(400, return_sequences=False)(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(600, return_sequences=False)(Dropout_layer2)
 
 Dropout_layer3=keras.layers.Dropout(0.6)(LSTM_Layer2)# modify
 

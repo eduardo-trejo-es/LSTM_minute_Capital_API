@@ -40,12 +40,13 @@ class Forcast_Data:
     
     self.dataSet_Gen = DatasetGenerator()
     
-  def ToForcastfrom(self,OneColums,dateFromForcast,data_frame_Path,BackDays):
+  def ToForcastfrom(self,ColumToforcast,dateFromForcast,data_frame_Path,BackDays):
     csvFileName=data_frame_Path
   ########     Getting the Data     ######
     #Model_Path=model_Path
     df=pd.read_csv(csvFileName,index_col=0)
     backDaysRef=BackDays
+    columToforcast=ColumToforcast
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
@@ -57,10 +58,7 @@ class Forcast_Data:
     #print(Dates_To_Use_To_Forcast)
     
     Columns_N=df.shape[1]
-    if OneColums:
-      ColumToforcast=0
-    else:
-      ColumToforcast=2
+    
     #Getting the columns name
     cols = list(df)[0:Columns_N]
     #New dataframe with only training data - 5 columns
@@ -77,10 +75,10 @@ class Forcast_Data:
     print(dateFromForcast)
     print("----------------------------------------------")
     print("\n")
-    df_forcasting_close=df_forcasting[cols[ColumToforcast]].to_numpy()
+    df_forcasting_close=df_forcasting[cols[columToforcast]].to_numpy()
     #df_forcasting_close=df_forcasting[cols[3]].to_numpy()
     #df_forcasting_close=df_forcasting[cols[8]].to_numpy()
-    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[ColumToforcast]].to_numpy()),-1)
+    df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[columToforcast]].to_numpy()),-1)
     #df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[3]].to_numpy()),-1)
     #df_forcasting_close=df_forcasting_close.reshape(len(df_forcasting[cols[8]].to_numpy()),-1)
     

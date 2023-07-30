@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 
 
 inverseModel=0
-OneColum=True
+OneColum=False
 
 if OneColum:
     #Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth20BackDlastFFTCloseValum100FFT"
@@ -20,22 +20,22 @@ if OneColum:
     percentageData=100
     forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_09_07_2023.csv"
 else:
-    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
-    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
+    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast11columnsFFTCloseHighLow500FFT600units1e-6"
+    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
-    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_20_05_2023.csv"
-    percentageData=100
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_600unit6training_28_07_2023.csv"
+    percentageData=96
     
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
 
 #is this one the old working trainer version
-#training_result=trainer_model.to_train(True,100,Model_Path,Data_CSV,percentageData,5)
-# this last one was 6 of 6
+training_result=trainer_model.to_train(0,100,Model_Path,Data_CSV,percentageData,5)
+# this last one was 6 of n6
 #
 date_from="2023-03-24 00:00:00"
-date_from2="2023-03-23 00:00:00"
+date_from="2023-03-23 00:00:00"
 NewDataSetForcasts="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/ForcastDataSetGen/CRUDE_OIL_DataNewDataSetForcasted.csv"
 
 #This method returns the the last prediction made of the n asked forcasted.
@@ -50,7 +50,7 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
-
+"""
 saveAllandforcast=pd.DataFrame({})
 fd_ColumnForcast_Close_Day=pd.DataFrame({})
 all_df=pd.read_csv(all_colums_Data_CSV,index_col=0)
@@ -82,7 +82,8 @@ locpercentage=int((indexDates.shape[0]*percentageData)/100)
 #datefiltredPercentage=indexDates[locpercentage:]
 datefiltredPercentage=indexDates[indexDates.shape[0]-backdaysConsideredToBForcasted:]
 for i in datefiltredPercentage:
-    forcaster.ToForcastfrom(True,str(i),Data_CSV,backdaysConsidered)
+    print("to be predict from: "+str(i))
+    forcaster.ToForcastfrom(0,str(i),Data_CSV,backdaysConsidered)
     Real_Y_current=forcaster.Get_UnicForcast_Real_Y_current()
     Real_Y_Forcast=forcaster.Get_UnicForcast_Forcast_Close()
     Real_Y_Close=forcaster.Get_UnicForcast_Real_Y_Close()
@@ -110,6 +111,10 @@ fd_ColumnForcast_Close_Day=fd_ColumnForcast_Close_Day.set_index('Dates')
 ### Below df has all origianl colums and dates
 Allandforcast=all_df[all_df.shape[0]-backdaysConsideredToBForcasted:]
 
+print(Allandforcast.shape)
+print(Allandforcast)
+print(fd_ColumnForcast_Close_Day.shape)
+print(fd_ColumnForcast_Close_Day)
 frames = [Allandforcast, fd_ColumnForcast_Close_Day]
 
 Final_Allandforcast = pd.concat(frames,axis=1)
@@ -127,3 +132,4 @@ plt.show()
     # to convert to CSV
 
 Final_Allandforcast.to_csv(path_or_buf=forcastPath,index=True)
+"""

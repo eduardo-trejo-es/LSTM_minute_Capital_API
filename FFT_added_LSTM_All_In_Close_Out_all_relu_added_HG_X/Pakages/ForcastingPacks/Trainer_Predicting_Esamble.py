@@ -26,9 +26,9 @@ class Model_Trainer:
   def __init__(self):
     pass
   
-  def to_train(self,OneColums,numEpochs, modelPath,DatasetPath,ThepercentageTrainingData,Np_pasdays):
+  def to_train(self,ColumToforcast,numEpochs, modelPath,DatasetPath,ThepercentageTrainingData,Np_pasdays):
     
-    ColumToforcast=0
+    columToforcast=ColumToforcast
     
     NumEpochs=numEpochs
     ########     Getting the Data      ######
@@ -41,10 +41,7 @@ class Model_Trainer:
     Data_dates=Data_dates.tz_localize(None)
     
     Columns_N=df.shape[1]
-    if OneColums:
-      ColumToforcast=0
-    else:
-      ColumToforcast=2
+    
       
     print(Columns_N)
     #Getting the columns name
@@ -64,7 +61,7 @@ class Model_Trainer:
 
     scaler = scaler.fit(df_for_training)
     DS_raw_scaled = scaler.transform(df_for_training)
-    DS_raw_Close_scaled=DS_raw_scaled[:,[ColumToforcast]]
+    DS_raw_Close_scaled=DS_raw_scaled[:,[columToforcast]]
     #DS_raw_Close_scaled=DS_raw_scaled[:,[Columns_N]]
     #DS_raw_Close_scaled=DS_raw_scaled[:,[3]]
     #DS_raw_Close_scaled=DS_raw_scaled[:,[8]]
@@ -152,10 +149,13 @@ class Model_Trainer:
 
 
     losses = pd.DataFrame(model.history.history)
-
-    losses.plot()
-
     model.save(modelPath,save_format="h5")
+    
+    
+    losses.plot()
+    plt.show()
+
+    
     
     
     Training_result="done... ;)"
