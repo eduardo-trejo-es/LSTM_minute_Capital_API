@@ -98,25 +98,18 @@ class Model_Trainer:
     #It's going to be used 70% of data to train and 30% to test the model
 
     #This Function split dataset with shape (z,x, y) and is splited in z
-    def Split3DimData(DataSet,percentageTrainig):
-      percentageTrainDataset = 0
-      percentageTrainDataset=int((DataSet.shape[0]*percentageTrainig)/100)
-      DataSetSplittedTraining=DataSet[0:percentageTrainDataset]
-      DataSetSplittedTesting= DataSet[percentageTrainDataset:]
-
-      return DataSetSplittedTraining, DataSetSplittedTesting
 
     percentageTrainingData= ThepercentageTrainingData
     #####   training data, testing data  ####
-    trainX, testingX = Split3DimData(DS_finished_X,percentageTrainingData)
-    trainY_Close,testingY_Close=Split3DimData(DS_finished_Close_Y,percentageTrainingData)
+    trainX, testingX = self.Split3DimData(DS_finished_X,percentageTrainingData)
+    trainY_Close,testingY_Close=self.Split3DimData(DS_finished_Close_Y,percentageTrainingData)
 
     ##Validated data set, im getting the spected result
 
     print(testingX.shape)
     print(trainX.shape)
 
-    train_Dates, testing_Dates = Split3DimData(Data_dates,percentageTrainingData)
+    train_Dates, testing_Dates = self.Split3DimData(Data_dates,percentageTrainingData)
 
     print(train_Dates.shape)
     print(testing_Dates.shape)
@@ -154,9 +147,6 @@ class Model_Trainer:
     
     losses.plot()
     plt.show()
-
-    
-    
     
     Training_result="done... ;)"
     
@@ -296,3 +286,11 @@ class Model_Trainer:
       import mplfinance as mpf
       title_chart="Twtr"
       mpf.plot(df_forecast, type='candle',title=title_chart, style='charles')
+      
+  def Split3DimData(self,DataSet,percentageTrainig):
+      percentageTrainDataset = 0
+      percentageTrainDataset=int((DataSet.shape[0]*percentageTrainig)/100)
+      DataSetSplittedTraining=DataSet[0:percentageTrainDataset]
+      DataSetSplittedTesting= DataSet[percentageTrainDataset:]
+
+      return DataSetSplittedTraining, DataSetSplittedTesting
