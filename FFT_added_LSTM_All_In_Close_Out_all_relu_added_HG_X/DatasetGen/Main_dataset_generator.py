@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/DataSetgenPacks")
+sys.path.append("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/DataSetgenPacks")
 
 # import all classes
 from Retriver_and_Processor_Dataset import DatasetGenerator
@@ -72,8 +72,6 @@ Column=['High','Low']
 frec=[500]
 
 dataSet_Gen.getTheLastFFTValue(backdaysToconsider,frec,Column,inicialPath, FFTNew_FileData)   
-
-
 
 columns=['High','Low']
 

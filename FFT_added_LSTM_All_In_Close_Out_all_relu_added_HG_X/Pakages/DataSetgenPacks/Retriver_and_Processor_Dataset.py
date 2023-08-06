@@ -26,14 +26,15 @@ class DatasetGenerator:
         self.SavingDataset(df,csvFileName, csvFileName_New,False)
               
     def SavingDataset(self,df,csvFileName, csvFileName_New,Add_to_old):
-        #####      Saving Data In CSV file   ####
+        #####      Saving Data In CSV file   ##
         if Add_to_old:
             try:
                 existing=pd.read_csv(csvFileName, index_col="Date")
                 #print(existing)
                 #print(type(existing))
                 try:
-                    existing = existing.append(df)
+                    #existing = existing.append(df)
+                    existing = pd.concat([existing,df])
                 except :
                     print("could not be possible to add new rows")
                 print("was try")
