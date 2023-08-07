@@ -28,7 +28,7 @@ if OneColum:
     Columns_N=7
     modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6"
 else:
-    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast9columnsFFTCloseHighLow500FFT300units1e-6_90percenDataTrainded"
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast9columnsFFTCloseHighLow500FFT300units1e-6_96percenDataTrainded"
     Columns_N=9
 
 inputs=keras.Input(shape=(n_past,Columns_N))

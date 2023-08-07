@@ -1,6 +1,6 @@
 import sys
-sys.path.append("/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/DataSetgenPacks")
-sys.path.append("/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/ForcastingPacks")
+sys.path.append("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/DataSetgenPacks")
+sys.path.append("FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/Pakages/ForcastingPacks")
 from Trainer_Predicting_Esamble import Model_Trainer
 #from Forcaster_Model import Forcast_Data
 from Forcaster_Model_DateFromToForcast import Forcast_Data
@@ -20,17 +20,17 @@ if OneColum:
     percentageData=100
     forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_09_07_2023.csv"
 else:
-    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast9columnsFFTCloseHighLow500FFT300units1e-6_90percenDataTrainded"
+    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast9columnsFFTCloseHighLow500FFT300units1e-6_96percenDataTrainded"
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
     forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_90percentdataused_5_08_2023.csv"
-    percentageData=90
+    percentageData=96
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
 
 #is this one the old working trainer version
-#training_result=trainer_model.to_train(0,100,Model_Path,Data_CSV,percentageData,5)
+training_result=trainer_model.to_train(0,100,Model_Path,Data_CSV,percentageData,5)
 # this last one was 6 of n6
 #
 date_from="2023-03-24 00:00:00"
@@ -49,7 +49,7 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
-
+"""
 saveAllandforcast=pd.DataFrame({})
 fd_ColumnForcast_Close_Day=pd.DataFrame({})
 all_df=pd.read_csv(all_colums_Data_CSV,index_col=0)
@@ -136,3 +136,4 @@ plt.show()
     # to convert to CSV
 
 Final_Allandforcast.to_csv(path_or_buf=forcastPath,index=True)
+"""
