@@ -24,7 +24,7 @@ else:
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
     forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_96percentdataused_7_08_2023.csv"
-    percentageData=96
+    percentageData=100
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
