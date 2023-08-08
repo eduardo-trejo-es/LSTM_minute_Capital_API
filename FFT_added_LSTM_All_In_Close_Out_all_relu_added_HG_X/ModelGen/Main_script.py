@@ -23,14 +23,14 @@ else:
     Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast9columnsFFTCloseHighLow500FFT300units1e-6_96percenDataTrainded"
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
-    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_90percentdataused_5_08_2023.csv"
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_96percentdataused_7_08_2023.csv"
     percentageData=96
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
 
-#is this one the old working trainer version
-training_result=trainer_model.to_train(0,100,Model_Path,Data_CSV,percentageData,5)
+#is this one the old working trainer versi
+# training_result=trainer_model.to_train(0,100,Model_Path,Data_CSV,percentageData,5)
 # this last one was 6 of n6
 #
 date_from="2023-03-24 00:00:00"
@@ -49,7 +49,6 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
-"""
 saveAllandforcast=pd.DataFrame({})
 fd_ColumnForcast_Close_Day=pd.DataFrame({})
 all_df=pd.read_csv(all_colums_Data_CSV,index_col=0)
@@ -136,4 +135,3 @@ plt.show()
     # to convert to CSV
 
 Final_Allandforcast.to_csv(path_or_buf=forcastPath,index=True)
-"""
