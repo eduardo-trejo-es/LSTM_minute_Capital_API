@@ -20,17 +20,17 @@ if OneColum:
     percentageData=100
     forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_09_07_2023.csv"
 else:
-    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast9columnsFFTCloseHighLow500FFT300units1e-6_96percenDataTrainded"
-    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
+    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_TutorialDigitalSreeni_26Aug2023.keras"
+    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_2400_5Backdys.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
-    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_96percentdataused_7_08_2023.csv"
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Forcasts/Focast_CloseHighLowDayMonth5backdayslastFFT500_96percentdataused_7_08_2023_94to98.csv"
     percentageData=100
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
 
 #is this one the old working trainer versi
-# training_result=trainer_model.to_train(0,100,Model_Path,Data_CSV,percentageData,5)
+#training_result=trainer_model.to_train(2,100,Model_Path,Data_CSV,percentageData,5)
 # this last one was 6 of n6
 #
 date_from="2023-03-24 00:00:00"
@@ -49,6 +49,7 @@ print(Real_Y_Forcast)
 print(Real_Y_Close) 
 """
 ########## forcasting instuctions below ########
+
 saveAllandforcast=pd.DataFrame({})
 fd_ColumnForcast_Close_Day=pd.DataFrame({})
 all_df=pd.read_csv(all_colums_Data_CSV,index_col=0)
@@ -57,7 +58,6 @@ print(all_df.shape)
 df=pd.read_csv(Data_CSV,index_col=0)
 print(df.shape)
 backdaysConsidered=5
-
 
 backdaysConsideredToBForcasted=200
 locpercentage=0
@@ -85,7 +85,7 @@ datefiltredPercentage=indexDates[locpercentage-backdaysConsideredToBForcasted:lo
 print(datefiltredPercentage.shape)
 for i in datefiltredPercentage:
     print("to be predict from: "+str(i))
-    forcaster.ToForcastfrom(0,str(i),Data_CSV,backdaysConsidered)
+    forcaster.ToForcastfrom(2,str(i),Data_CSV,backdaysConsidered)
     Real_Y_current=forcaster.Get_UnicForcast_Real_Y_current()
     Real_Y_Forcast=forcaster.Get_UnicForcast_Forcast_Close()
     Real_Y_Close=forcaster.Get_UnicForcast_Real_Y_Close()
@@ -112,8 +112,10 @@ fd_ColumnForcast_Close_Day=fd_ColumnForcast_Close_Day.set_index('Dates')
 
 ### Below df has all origianl colums and dates
 #Allandforcast=all_df[all_df.shape[0]-backdaysConsideredToBForcasted:]
+#if fft considered:
 Allandforcast=all_df[locpercentage-backdaysConsideredToBForcasted+backdaysConsidered:locpercentage+5]
-
+#if not FFT consider
+# Allandforcast=all_df[locpercentage-backdaysConsideredToBForcasted:locpercentage]
 print(Allandforcast.shape)
 print(Allandforcast)
 print(fd_ColumnForcast_Close_Day.shape)

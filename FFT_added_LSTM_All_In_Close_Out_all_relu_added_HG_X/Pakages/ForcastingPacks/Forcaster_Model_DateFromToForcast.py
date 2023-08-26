@@ -49,7 +49,7 @@ class Forcast_Data:
     columToforcast=ColumToforcast
     #Separate dates for future plotting
     Data_dates = df.index
-    Data_dates=pd.to_datetime(Data_dates,utc=True,format="mixed")
+    Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
     #....... dates .....#
     Dates_To_Use_To_Forcast=Data_dates[Data_dates.get_loc(dateFromForcast)-(backDaysRef-1):Data_dates.get_loc(dateFromForcast)+1]

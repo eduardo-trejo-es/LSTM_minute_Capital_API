@@ -37,7 +37,7 @@ class Model_Trainer:
     df=pd.read_csv(csvFileName,index_col=0)
     #Separate dates for future plotting
     Data_dates = df.index
-    Data_dates=pd.to_datetime(Data_dates,utc=True, format="mixed")
+    Data_dates=pd.to_datetime(Data_dates,utc=True)
     Data_dates=Data_dates.tz_localize(None)
     
     Columns_N=df.shape[1]
