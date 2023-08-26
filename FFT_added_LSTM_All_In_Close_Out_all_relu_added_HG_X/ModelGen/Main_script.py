@@ -59,7 +59,7 @@ df=pd.read_csv(Data_CSV,index_col=0)
 print(df.shape)
 backdaysConsidered=5
 
-backdaysConsideredToBForcasted=200
+backdaysConsideredToBForcasted=5
 locpercentage=0
 ColumnCurrent_Close_Day=[]
 Real_Y_current=0
