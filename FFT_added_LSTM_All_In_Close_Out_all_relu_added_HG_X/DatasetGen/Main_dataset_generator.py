@@ -35,6 +35,7 @@ else:
     FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_2400_5Backdys.csv"
     LastPopcolum="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
 
+
 #dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving)
 dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
 
@@ -65,16 +66,15 @@ dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
 #Generate new FFT columns done :)
 
 
-backdaysToconsider=6
+backdaysToconsider=91
 inicialPath=yearAddedPath
 FFTNew_FileData=FFTAddedPath
-Column=['Close']
+Column=['High','Low']
 frec=[150]
 
 dataSet_Gen.getTheLastFFTValue(backdaysToconsider,frec,Column,inicialPath, FFTNew_FileData)   
 
-"""
+
 columns=['High','Low']
 
-dataSet_Gen.PopListdf(columns,FFTNew_FileData,LastPopcolum)  
-"""
+dataSet_Gen.PopListdf(columns,FFTNew_FileData,LastPopcolum)

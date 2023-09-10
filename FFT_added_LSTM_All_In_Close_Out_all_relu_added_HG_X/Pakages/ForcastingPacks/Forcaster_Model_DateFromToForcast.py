@@ -40,13 +40,14 @@ class Forcast_Data:
     
     self.dataSet_Gen = DatasetGenerator()
     
-  def ToForcastfrom(self,ColumToforcast,dateFromForcast,data_frame_Path,BackDays):
+  def ToForcastfrom(self,ColumToforcast,ColumRealYToCompare,dateFromForcast,data_frame_Path,BackDays):
     csvFileName=data_frame_Path
   ########     Getting the Data     ######
     #Model_Path=model_Path
     df=pd.read_csv(csvFileName,index_col=0)
     backDaysRef=BackDays
     columToforcast=ColumToforcast
+    columRealYToCompare=ColumRealYToCompare
     #Separate dates for future plotting
     Data_dates = df.index
     Data_dates=pd.to_datetime(Data_dates,utc=True)
@@ -157,13 +158,13 @@ class Forcast_Data:
     #print("The shape of Batch_Real_Y_NonScaled: " + str(Batch_Real_Y_NonScaled.shape))
     try:
       Real_Y_Close=df_forcasting[df.index.get_loc(dateFromForcast)+1:df.index.get_loc(dateFromForcast)+2]
-      Real_Y_Close=Real_Y_Close["Close"][0]
+      Real_Y_Close=Real_Y_Close[cols[columRealYToCompare]][0]
     except:
       Real_Y_Close=df_forcasting[df.index.get_loc(dateFromForcast):df.index.get_loc(dateFromForcast)+1]
-      Real_Y_Close=Real_Y_Close["Close"][0]
+      Real_Y_Close=Real_Y_Close[cols[columRealYToCompare]][0]
     
     Real_Y_current=df_forcasting[df.index.get_loc(dateFromForcast):df.index.get_loc(dateFromForcast)+1]
-    Real_Y_current=Real_Y_current["Close"][0]
+    Real_Y_current=Real_Y_current[cols[columToforcast]][0]
     #Real_Y_current=Batch_Real_Y_NonScaled[Batch_Real_Y_NonScaled.shape[0]-1][ColumToforcast]
 
     self.Real_Y_current=Real_Y_current

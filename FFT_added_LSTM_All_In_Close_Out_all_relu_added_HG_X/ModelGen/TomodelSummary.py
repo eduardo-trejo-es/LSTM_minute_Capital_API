@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.python.keras.layers.core import Activation
 
-modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlast11columnsFFTCloseHighLow500FFT600units1e-6"
+modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_TutorialDigitalSreeni_26Aug2023_30Percent.keras"
 
 model = keras.models.load_model(modelPath)
 
