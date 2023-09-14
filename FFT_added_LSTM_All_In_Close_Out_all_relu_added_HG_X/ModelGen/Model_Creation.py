@@ -1,7 +1,8 @@
 ###   Model creation
 
-from tensorflow.keras.layers import Dense, Activation
+from tensorflow.keras.layers import Dense, Activation 
 from tensorflow.keras.optimizers import Adam
+
 
 
 from tensorflow.keras.models import Sequential
@@ -29,23 +30,24 @@ if OneColum:
     modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6_17Aug2023.keras"
 else:
     #in testing modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6_17Aug2023.keras"
-    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_fft500_9Col90pasDrp0p0.1_DA5_DB128__06ep2023.keras"
-    Columns_N=9
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_fft500_9Col90pasDrp0p0.1_DA5_DB128_Regu10ep2023.keras"
+    Columns_N=5
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
 #LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_sequences=True,activation='PReLU')(inputs)
-LSTM_Layer1=keras.layers.LSTM(90, input_shape=(n_past,Columns_N), return_sequences=True,activation='PReLU')(inputs)
+LSTM_Layer1=keras.layers.LSTM(5, input_shape=(n_past,Columns_N), return_sequences=True,activation='PReLU')(inputs)
 
-Dropout_layer2=keras.layers.Dropout(0.15)(LSTM_Layer1)# modify
+
+Dropout_layer2=keras.layers.Dropout(0.1)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(128, return_sequences=False,activation='PReLU')(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(60, return_sequences=False,activation='PReLU')(Dropout_layer2)
 
-Dropout_layer3=keras.layers.Dropout(0.15)(LSTM_Layer2)# modify
-
+Dropout_layer3=keras.layers.Dropout(0.1)(LSTM_Layer2)# modify
 
 #---------------------------Outputs
-dense=keras.layers.Dense(1)(Dropout_layer3)
+dense=keras.layers.Dense(1,kernel_regularizer=tf.keras.regularizers.L1L2(l1=0.001, l2=0.0001))(Dropout_layer3)# L1 + L2 penalties
+#dense=keras.layers.Dense(1,activity_regularizer=tf.keras.regularizers.L2(0.01))(Dropout_layer3)
 
 #-------Layers outputs are linked
 outputs=dense

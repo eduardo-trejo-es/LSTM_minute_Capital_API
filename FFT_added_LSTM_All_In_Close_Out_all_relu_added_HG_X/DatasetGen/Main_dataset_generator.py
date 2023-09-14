@@ -66,7 +66,7 @@ dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
 #Generate new FFT columns done :)
 
 
-backdaysToconsider=91
+backdaysToconsider=6
 inicialPath=yearAddedPath
 FFTNew_FileData=FFTAddedPath
 Column=['High','Low']
