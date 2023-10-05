@@ -21,7 +21,7 @@ keras.backend.clear_session()  # Reseteo sencillo
 #---------Layes are created
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-n_past =90
+n_past =5
 OneColum=False
 
 
@@ -30,24 +30,25 @@ if OneColum:
     modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6_17Aug2023.keras"
 else:
     #in testing modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6_17Aug2023.keras"
-    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_fft500_9Col90pasDrp0p0.1_DA5_DB128_Regu10ep2023.keras"
-    Columns_N=5
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_fft150_11BackDay.keras"
+    
+    Columns_N=11
 
 inputs=keras.Input(shape=(n_past,Columns_N))
 
 #LSTM_Layer1=keras.layers.LSTM(n_past, input_shape=(n_past,Columns_N), return_sequences=True,activation='PReLU')(inputs)
-LSTM_Layer1=keras.layers.LSTM(5, input_shape=(n_past,Columns_N), return_sequences=True,activation='PReLU')(inputs)
+LSTM_Layer1=keras.layers.LSTM(50, input_shape=(n_past,Columns_N), return_sequences=True,activation='PReLU')(inputs)
 
-
-Dropout_layer2=keras.layers.Dropout(0.1)(LSTM_Layer1)# modify
+#Dropout_layer2=keras.layers.Dropout(0.5)(LSTM_Layer1)# modify
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-LSTM_Layer2=keras.layers.LSTM(60, return_sequences=False,activation='PReLU')(Dropout_layer2)
+LSTM_Layer2=keras.layers.LSTM(100, return_sequences=False,activation='PReLU')(LSTM_Layer1)
 
-Dropout_layer3=keras.layers.Dropout(0.1)(LSTM_Layer2)# modify
+Dropout_layer3=keras.layers.Dropout(0.2)(LSTM_Layer2)# modify
 
 #---------------------------Outputs
-dense=keras.layers.Dense(1,kernel_regularizer=tf.keras.regularizers.L1L2(l1=0.001, l2=0.0001))(Dropout_layer3)# L1 + L2 penalties
-#dense=keras.layers.Dense(1,activity_regularizer=tf.keras.regularizers.L2(0.01))(Dropout_layer3)
+#dense=keras.layers.Dense(1,kernel_regularizer=tf.keras.regularizers.L1L2(l1=0.00001, l2=0.00001))(Dropout_layer3)# L1 + L2 penalties
+#dense=keras.layers.Dense(1)(Dropout_layer3)
+dense=keras.layers.Dense(1,kernel_regularizer=tf.keras.regularizers.L2(0.001))(Dropout_layer3)
 
 #-------Layers outputs are linked
 outputs=dense
@@ -65,7 +66,7 @@ model=keras.Model(inputs=inputs, outputs=outputArray, name='Prices_Forcasting_LS
 loss = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 
 #optim=keras.optimizers.Adam(1e-3)
-optim=keras.optimizers.Adam(1e-3)
+optim=keras.optimizers.Adam(1e-6)
 Metrics=["mean_squared_error"]
 
 losses={

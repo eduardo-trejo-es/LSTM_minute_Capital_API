@@ -69,8 +69,8 @@ dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
 backdaysToconsider=6
 inicialPath=yearAddedPath
 FFTNew_FileData=FFTAddedPath
-Column=['High','Low']
-frec=[150]
+Column=["Close",'High','Low']
+frec=[160]
 
 dataSet_Gen.getTheLastFFTValue(backdaysToconsider,frec,Column,inicialPath, FFTNew_FileData)   
 
