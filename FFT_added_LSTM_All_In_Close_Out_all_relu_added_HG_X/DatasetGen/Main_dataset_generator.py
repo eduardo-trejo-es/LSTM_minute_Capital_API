@@ -36,9 +36,8 @@ else:
     LastPopcolum="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
     Add_To_old=False
 
-
-dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving,Add_To_old)
-#dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
+#dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving,Add_To_old)
+dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
 
 #columns to pop up
 #dataSet_Gen.AddRepeatedLastOne(Original_Path_Retiving, LastOnetwice)
