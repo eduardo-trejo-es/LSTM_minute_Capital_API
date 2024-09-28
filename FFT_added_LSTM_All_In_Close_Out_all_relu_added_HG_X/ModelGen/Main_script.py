@@ -10,15 +10,15 @@ from matplotlib import pyplot as plt
 
 
 inverseModel=0
-OneColum=False
+OneColum=True
 
 if OneColum:
     #Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/Model/Models_fewColums/Model_LSTM_DayMonth20BackDlastFFTCloseValum100FFT"
-    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT400units1e-6"
-    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
+    Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_28Sep2024.keras"
+    Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Close_DevStnd.csv"
     all_colums_Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data.csv"
-    percentageData=100
-    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_CloseDayMonth5backdayslastFFT150_300unit6training_09_07_2023.csv"
+    percentageData=80
+    forcastPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Forcasts/Focast_Close_28Sep2024.csv"
 else:
     """Model_Path="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_fft150_11BackDay.keras"
     Data_CSV="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
@@ -32,15 +32,15 @@ else:
     forcastPath="/Users/eduardo/Desktop/LSTM_Capital_API_220922/FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/From_test_2023_Nov_08_provisional/Model_19/Focast_Model_19.csv"
     percentageData=100
 
-FFtUsedQ=True
+FFtUsedQ=False
 
 trainer_model = Model_Trainer()
 forcaster =Forcast_Data(Model_Path)
-
+backDaysConsidered=3
 ####### note: 
 
 #is this one the old working trainer versi
-#training_result=trainer_model.to_train(0,200,Model_Path,Data_CSV,percentageData,5)
+#training_result=trainer_model.to_train(0,50,Model_Path,Data_CSV,percentageData,backDaysConsidered)
 
 # this last one was 6 of n6
 #
@@ -68,7 +68,7 @@ print(all_df.shape)
 
 df=pd.read_csv(Data_CSV,index_col=0)
 print(df.shape)
-backdaysConsidered=5
+backdaysConsidered=backDaysConsidered
 
 backdaysConsideredToBForcasted=200
 locpercentage=0

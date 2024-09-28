@@ -12,7 +12,7 @@ dateEnd= '2023-03-02'
 
 #######______________ CRUDE_Oil 'CL=F' _____________  ################
 itemName = 'CL=F'
-OneColum=False
+OneColum = True
 
 if OneColum:
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data.csv"
@@ -24,6 +24,8 @@ if OneColum:
     yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Data_And_year.csv"
     FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_CloseFFT_150_5Backdys.csv"
     LastPopcolum="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Close_lastPopcolum.csv"
+    DevStndAdded="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/OnlyCloseColum/CRUDE_OIL_Close_DevStnd.csv"
+    Add_to_old=False
 else:
     Original_Path_Retiving="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data.csv"
     Onlyonecolumn="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_onlyClose.csv"
@@ -34,10 +36,10 @@ else:
     yearAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Data_And_year.csv"
     FFTAddedPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_CloseFFT_2400_5Backdys.csv"
     LastPopcolum="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/DatasetGen/CRUDE_OIL/High_Low_Close/CRUDE_OIL_Close_lastPopcolum.csv"
-    Add_To_old=False
+    Add_to_old=False
 
-#dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving,Add_To_old)
-dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving)
+dataSet_Gen.RetivingDataPrices_Yahoo(itemName,dateStart, dateEnd,Original_Path_Retiving,Original_Path_Retiving,Add_to_old)
+#dataSet_Gen.UpdateToday(itemName,Original_Path_Retiving,True)
 
 #columns to pop up
 #dataSet_Gen.AddRepeatedLastOne(Original_Path_Retiving, LastOnetwice)
@@ -62,11 +64,10 @@ dataSet_Gen.AddColumnWeekDay(Onlyonecolumn, DayNumAddedPath,False)
 dataSet_Gen.AddColumnMothandDay(DayNumAddedPath, MonthAddedPath,False)
 
 dataSet_Gen.AddColumnYear(MonthAddedPath,yearAddedPath)
+
 #
 #Generate new FFT columns done :)
-
-
-backdaysToconsider=6
+"""backdaysToconsider=6
 inicialPath=yearAddedPath
 FFTNew_FileData=FFTAddedPath
 Column=["Close",'High','Low']
@@ -77,4 +78,13 @@ dataSet_Gen.getTheLastFFTValue(backdaysToconsider,frec,Column,inicialPath, FFTNe
 
 columns=['High','Low']
 
-dataSet_Gen.PopListdf(columns,FFTNew_FileData,LastPopcolum)
+dataSet_Gen.PopListdf(columns,FFTNew_FileData,LastPopcolum)"""
+
+
+#Generate new FFT columns done :)
+MaxBackDist=6
+backPeriod=3
+column="Close"
+
+dataSet_Gen.Add_normal_distribution(yearAddedPath,DevStndAdded,MaxBackDist,backPeriod,column)
+

@@ -4,6 +4,8 @@ from datetime import date, timedelta
 
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import norm
+from scipy import stats
 
 import cmath
 
@@ -225,7 +227,7 @@ class DatasetGenerator:
                 #print("this is the last df"+str(df.head))     
         return df
     
-    def UpdateToday(self, ItemName,CsvFileName):
+    def UpdateToday(self, ItemName,CsvFileName,Add_to_old):
         startDate=""
         endDate=str(date.today())
         itemName=ItemName
@@ -233,13 +235,12 @@ class DatasetGenerator:
         df=pd.read_csv(csvFileName, index_col="Date")
         
         
-        
         startDate=df.index[df.shape[0]-1:]
         startDate=str(np.datetime64(startDate[0])+np.timedelta64(1, 'D'))[0:10]
 
         print(endDate)
         print(startDate)
-        self.RetivingDataPrices_Yahoo(itemName,startDate,endDate,csvFileName,csvFileName)
+        self.RetivingDataPrices_Yahoo(itemName,startDate,endDate,csvFileName,csvFileName,Add_to_old)
         #df=yf.download('CL=F',start = startDate, end = endDate,interval='1d',utc=True,threads = True)
     
     
@@ -441,4 +442,58 @@ class DatasetGenerator:
         
         print(FinalLastFFTDataset.tail)
         
-        self.SavingDataset(FinalLastFFTDataset,newFilepath, newFilepath, False)   
+        self.SavingDataset(FinalLastFFTDataset,newFilepath, newFilepath, False)  
+    
+    def Add_normal_distribution(self,Df,NewdfPath,MaxBackDist,BackPeriod,Column):
+        df=pd.read_csv(Df, index_col="Date")
+        New_df=df
+        #print(New_df.shape[0])
+        maxBackDist=MaxBackDist
+        backPeriod_init=0
+        backPeriod_end=BackPeriod
+        #print("New_df.shape[0]: "+str(New_df.shape[0]))
+        loan_Column_df=df[Column]
+
+        sigmaOofset_Plus_list=[]
+        sigmaOofset_less_list=[]
+        All_Area_list=[]
+
+
+        while maxBackDist<=New_df.shape[0]:
+            temporalDataSet=loan_Column_df[backPeriod_init:maxBackDist]
+            print(temporalDataSet)
+            mu=temporalDataSet.describe()[1] #Getting the mean value
+
+            temporalNumpyDtaSet=temporalDataSet.to_numpy()
+            sigma=np.std(temporalNumpyDtaSet) # Sigma standard deviation
+
+
+            SubPeriod_df=temporalDataSet[temporalDataSet.shape[0]-backPeriod_end:]
+            print(SubPeriod_df)
+            SubPer_Max = SubPeriod_df.max()
+            SubPer_min = SubPeriod_df.min()
+
+
+
+            sigmaOofset_Plus_list.append(SubPer_Max)
+
+            sigmaOofset_less_list.append(SubPer_min)
+
+            All_Area=norm.cdf(SubPer_Max,loc=mu,scale=sigma)-norm.cdf(SubPer_min,loc=mu,scale=sigma)#getting the accumulative normal distribution "Area under the curve"
+            All_Area_list.append(All_Area)
+
+            backPeriod_init+=1
+            maxBackDist+=1
+
+
+        New_df_=New_df[MaxBackDist-1:]
+        #print(New_df_.shape())
+
+        Name_New_Column_1=Column+"MaxVSubPeriod"
+        Name_New_Column_2=Column+"All_Area"
+        Name_New_Column_3=Column+"minVSuberiod"
+        New_df_[Name_New_Column_1]=sigmaOofset_less_list
+        New_df_[Name_New_Column_2]=All_Area_list
+        New_df_[Name_New_Column_3]=sigmaOofset_Plus_list
+
+        self.SavingDataset(New_df_,"actualdfPath", NewdfPath, False)  

@@ -21,13 +21,13 @@ keras.backend.clear_session()  # Reseteo sencillo
 #---------Layes are created
 
 n_future = 1   # Number of units(day, min, hour, etc..) we want to look into the future based on the past days.
-n_past =5
-OneColum=False
+n_past =3
+OneColum=True
 
 
 if OneColum:
-    Columns_N=7
-    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6_17Aug2023.keras"
+    Columns_N=8
+    modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/OnlyCloseColum/Model/Models_fewColums/Model_LSTM_28Sep2024.keras"
 else:
     #in testing modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_DayMonth5BackDlastFFTCloseValum150FFT300units1e-6_17Aug2023.keras"
     modelPath="FFT_added_LSTM_All_In_Close_Out_all_relu_added_HG_X/ModelGen/High_Low_Close/Model/Models_fewColums/Model_LSTM_fft150_11BackDay.keras"
